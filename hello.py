@@ -25,9 +25,22 @@ def print_get():
 	else:
 		return "false"
 
-@app.route('/print',methods=['POST'])
+def sh_quote(s):
+    si=s.replace(" ",'\\ ')
+    
+    return si
+
+@app.route('/play',methods=['POST'])
 def print_post():
-	return 'post'
+	file_path = request.form['file']
+	dir_path = request.form['path']
+	command='omxplayer '+sh_quote(dir_path)+sh_quote(file_path)+' -o local &'
+	if file_path and dir_path:
+		#print command
+		os.system(command)
+		return '{"status":"ok","command":"'+command+'"}'
+	return '{"status":"error"}'
+
 @app.route('/listdir',methods=['POST'])
 def list_dir():
 	extensions=['mp4','mkv']
