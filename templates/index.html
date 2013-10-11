@@ -1,3 +1,56 @@
 <html>
-	Ola mundo
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link href="static/css/main.css" type="text/css" rel="stylesheet" >
+		<script src="static/js/js.js"></script>
+		<title>PIOmxControl</title>
+	</head>
+	<body>
+		<div class="main">
+			<select id="filesSelect">
+			</select>
+			<input type="text" id="folder" value="/home/pi/"/>
+			<input type="button" id="play" value="Play"/>
+			<input type="button" id="list" value="List Files"/>
+			<input type="button" id="stop" value="Stop"/>
+			
+		</div>
+	</body>
+	<script>
+		var sel=$("filesSelect");
+		var CreateData=function(data){
+			var str="";
+			for(var i=0;i<data.length;i++){
+				str+="<option>"+data[i]+"</option>";
+			}
+			sel.innerHTML=str;
+		}
+		$('stop').onclick=function(){
+			var aj=new BLauLib.Ajax();
+			aj.open("GET","/killomx");
+			aj.send(null);
+			$('play').disabled=false;
+			$('play').value="Play";
+		}
+		$('list').onclick=function(){
+    			var aj=new BLauLib.Ajax();
+    			aj.addVar("path",$('folder').value);
+    			aj.onLoaded=function(){
+        			var data=aj.getJSON();
+        			CreateData(data);
+    			}
+    			aj.callPost("listdir");
+		}
+		$('play').onclick=function(){
+    			var aj=new BLauLib.Ajax();
+    			aj.addVar("path",$('folder').value);
+    			aj.addVar("file",$('filesSelect').value);
+    			aj.onLoaded=function(){
+         			$('play').disabled=true;
+				$('play').value="Playing";
+    			}
+    			aj.callPost("play");
+		}
+	</script>
 </html>

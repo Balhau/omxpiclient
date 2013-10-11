@@ -1,0 +1,36 @@
+@media all{
+body{
+	width:100%;
+	font-family: Helvetica;
+	background-color:grey;
+	margin:auto;
+}
+
+input{
+	width:90%;
+	font-size:20pt;;
+}
+
+select{
+	margin:0 auto;
+	width:90%;
+	background:black;
+	color:white;
+	font-size:14pt;
+}
+
+div.main{
+	margin-top:5%;
+	padding-top:5%;
+	margin-left:2.5%;
+	width:95%;
+	background-color:white;
+	overflow: auto;
+	min-height:80%;
+	text-align:center;
+}
+div.button{
+	width:50%;
+	background:green;
+}
+}
