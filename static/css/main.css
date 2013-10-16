@@ -8,7 +8,68 @@ body{
 
 input{
 	width:90%;
-	font-size:20pt;;
+	font-size:10pt;
+}
+
+div.green{
+	background:#B8E7AD;
+}
+
+div.red{
+	background:#E7ADAD;
+}
+
+input.btnInput{
+	font-size:20pt;
+}
+
+div.hidden{
+	display:none;
+}
+
+div.list-container{
+	margin:auto;
+	margin-top: 2%;
+	width: 90%;
+	padding-top:2%;
+	padding-bottom:2%;
+	background-color: #EFF7F4;
+}
+
+div.img-thumb{
+	margin:auto;
+}
+
+div.item-desc{
+	width:80%;
+	text-align:left;
+	overflow:auto;
+}
+
+div.list-row{
+	margin-bottom: 1%;
+	overflow: auto;
+	clear: both;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	cursor: pointer;
+}
+
+div.f_left{
+	float:left;
+}
+
+div.f_right{
+	float:right;
+}
+
+div.clear-both{
+	clear:both
+}
+
+label.title-form{
+	font-size:20pt;
+	font-weight:bold;
 }
 
 select{
@@ -20,6 +81,7 @@ select{
 }
 
 div.main{
+	padding-bottom:5%;
 	margin-top:5%;
 	padding-top:5%;
 	margin-left:2.5%;

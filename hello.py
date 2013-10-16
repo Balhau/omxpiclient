@@ -18,14 +18,17 @@ def index():
 def youtube():
 	return render_template('youtube.html')
 
-@app.route('/teste')
+@app.route('/pl',methods=["POST"])
 def teste():
 	global omxProcess
-	cmdLine='omxplayer /home/pi/def20ec.mp4'
-	cmdLine='omxplayyt "http://www.youtube.com/watch?v=5L6TejdJXCc"'
-	args=shlex.split(cmdLine)
-	omxProcess=subprocess.Popen(args,stdin=subprocess.PIPE,stdout=subprocess.PIPE)
-	return '{"sound_up":true}'
+	os.system('killall omxplayer.bin')
+	url=request.form['url']
+	if url:
+		cmdLine='omxplayyt "'+url+'"'
+		args=shlex.split(cmdLine)
+		omxProcess=subprocess.Popen(args,stdin=subprocess.PIPE,stdout=subprocess.PIPE)
+		return '{"status":true}'
+	return '{"status":false}'
 
 @app.route('/killprocc')
 def killprocc():
@@ -38,23 +41,23 @@ def killprocc():
 		return '{"status":true}'
 	return '{"status":false}'
 
-@app.route('/sound_up')
-def up_sound():
+@app.route('/command',methods=['POST'])
+def message():
+	comm=request.form['command']
+	if comm:
+		return sendMsg(comm)
+	return '{"status":false,"code":1}'
+
+
+def sendMsg(msg):
 	global omxProcess
-	if omxProcess!=None:
-		omxProcess.stdin.write("+")
-		return '{"command":true}'
+	if omxProcess != None:
+		try:
+			omxProcess.stdin.write(msg)
+			return '{"status":true}'
+		except:
+			return '{"status":false}'
 	return '{"status":false}'
-
-@app.route('/sound_down')
-def down_sound():
-	global omxProcess
-	if omxProcess!=None:
-		omxProcess.stdin.write("-")
-		return '{"status":true}'
-	return '{"status":true}'
-
-
 
 @app.route('/killomx')
 def kill_omxplayer():
