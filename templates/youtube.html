@@ -1,0 +1,68 @@
+<html>
+	<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<script src="static/js/js.js"></script>
+	<link href="static/css/main.css" type="text/css" rel="stylesheet">
+	<title>YoutubeOMXPlayer</title>
+	</head>
+	<body>
+		<div class="main">
+			<label class="title-form">Search for Youtube Files</label>
+			<input type="text" id="searchTxt"/>
+			<input class="btnInput" type="button" id="searchBtn" value="Find"/>
+			<div id="data-container" class="list-container">
+			</div>
+		</div>
+	</body>
+	<script>
+	$('searchBtn').onclick=function(){
+   	var aj=new BLauLib.Ajax();
+   	var query=$('searchTxt').value;
+   	aj.onLoaded=function(){
+       		yt_data=aj.getJSON();
+       		$('data-container').innerHTML=yt_data.data.items.AMap(BuildEntry).join("\n");
+		addRowEvents();
+   	}
+   	aj.open("GET","http://gdata.youtube.com/feeds/api/videos?q="+query+"&v=2&alt=jsonc&start-index=1");
+   	aj.send(null);
+	}
+
+	var BuildEntry=function(el){
+		var str="<div class='list-row green'>";
+		str+="<div class='img-thumb'><img src='"+el.thumbnail.sqDefault+"'></img></div>";
+		str+="<div class='item-desc f_left'>"+el.title+"</div>"
+		str+="<div class='hidden'>"+el.player.default.substr(0,el.player.default.indexOf("&"))+"</div>";
+		str+="</div>";
+		return str;
+	}
+	
+	var addRowEvents=function(){
+		var nl=$('#list-row');
+		var arrNd = Array.prototype.slice.call(nl);
+		arrNd.map(function(el){
+			el.onclick=function(){
+				var nnl=$('#list-row');
+				var arrNNd=Array.prototype.slice.call(nl);
+				arrNNd.map(function(ell){
+					ell.className="list-row green";
+				});
+				this.className="list-row red";
+				var link=this.getElementsByClassName('hidden')[0].innerHTML;
+				playMovie(link);
+				
+				
+			}
+		});
+
+	}
+
+	var playMovie=function(strLink){
+		var aj=new BLauLib.Ajax();
+		aj.addVar('url',strLink);
+		aj.onLoaded=function(){
+		}
+		aj.callPost("pl");
+	}
+	</script>
+</html>
