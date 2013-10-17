@@ -78,12 +78,15 @@ def sh_quote(s):
 
 @app.route('/play',methods=['POST'])
 def print_post():
+	global omxProcess
 	file_path = request.form['file']
 	dir_path = request.form['path']
+	os.system('killall omxplayer.bin')
 	command='omxplayer '+sh_quote(dir_path)+sh_quote(file_path)+' -o local &'
 	if file_path and dir_path:
 		#print command
-		os.system(command)
+		args=shlex.split(command)
+		omxProcess=subprocess.Popen(args,stdin=subprocess.PIPE,stdout=subprocess.PIPE)
 		return '{"status":"ok","command":"'+command+'"}'
 	return '{"status":"error"}'
 
