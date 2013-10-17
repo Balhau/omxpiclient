@@ -79,7 +79,7 @@
 	};
 
 	$('sndUp').onclick=function(){
-		sendCommand(encodeURIComponent('+'));	
+		sendCommand('+');	
 	};
 
 	$('tooglePlay').onclick=function(){
@@ -88,7 +88,7 @@
 	
 	var sendCommand=function(cmd){
 		var aj=new BLauLib.Ajax();
-		aj.addVar("command",cmd);
+		aj.addVar("command",encodeURIComponent(cmd));
 		aj.onLoaded=function(){}
 		aj.callPost("command");
 	};

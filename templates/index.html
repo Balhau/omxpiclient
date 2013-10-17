@@ -8,6 +8,11 @@
 	</head>
 	<body>
 		<div class="main">
+			<div class="vid-controls">
+				<input class="btn-control" type="button" id="sndUp" value="UP"/>
+				<input class="btn-control" type="button" id="sndDw" value="DW"/>
+				<input class="btn-control" type="button" id="tooglePlay" value="Pause/Play"/>
+			</div>
 			<select id="filesSelect">
 			</select>
 			<input type="text" id="folder" value="/home/pi/"/>
@@ -52,5 +57,24 @@
     			}
     			aj.callPost("play");
 		}
+
+		$('sndDw').onclick=function(){
+			sendCommand('-');
+		};
+
+		$('sndUp').onclick=function(){
+			sendCommand('+');	
+		};
+
+		$('tooglePlay').onclick=function(){
+			sendCommand(' ');
+		};
+	
+		var sendCommand=function(cmd){
+			var aj=new BLauLib.Ajax();
+			aj.addVar("command",encodeURIComponent(cmd));
+			aj.onLoaded=function(){}
+			aj.callPost("command");
+		};
 	</script>
 </html>
