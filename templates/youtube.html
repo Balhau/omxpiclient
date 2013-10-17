@@ -8,24 +8,41 @@
 	</head>
 	<body>
 		<div class="main">
+			<div class="vid-controls">
+				<input class="btn-control" type="button" id="sndUp" value="UP"/>
+				<input class="btn-control" type="button" id="sndDw" value="DW"/>
+				<input class="btn-control" type="button" id="tooglePlay" value="Pause/Play"/>
+			</div>
 			<label class="title-form">Search for Youtube Files</label>
 			<input type="text" id="searchTxt"/>
 			<input class="btnInput" type="button" id="searchBtn" value="Find"/>
 			<div id="data-container" class="list-container">
 			</div>
+			<input class="btnInput" type="button" id="moreBtn" value="More"/>
 		</div>
 	</body>
 	<script>
+	var yt_data=null;
 	$('searchBtn').onclick=function(){
+		$('data-container').innerHTML="";
+		loadYTData(1);
+	}
+	var loadYTData=function(startIndex){
    	var aj=new BLauLib.Ajax();
    	var query=$('searchTxt').value;
    	aj.onLoaded=function(){
        		yt_data=aj.getJSON();
-       		$('data-container').innerHTML=yt_data.data.items.AMap(BuildEntry).join("\n");
+       		$('data-container').innerHTML+=yt_data.data.items.AMap(BuildEntry).join("\n");
 		addRowEvents();
    	}
-   	aj.open("GET","http://gdata.youtube.com/feeds/api/videos?q="+query+"&v=2&alt=jsonc&start-index=1");
+   	aj.open("GET","http://gdata.youtube.com/feeds/api/videos?q="+query+"&v=2&alt=jsonc&start-index="+startIndex);
    	aj.send(null);
+	}
+
+	$('moreBtn').onclick=function(){
+		var startIndex=1
+		if(yt_data!=null) startIndex=yt_data.data.startIndex+yt_data.data.itemsPerPage;
+		loadYTData(startIndex);
 	}
 
 	var BuildEntry=function(el){
@@ -55,7 +72,26 @@
 			}
 		});
 
-	}
+	};
+
+	$('sndDw').onclick=function(){
+		sendCommand('-');
+	};
+
+	$('sndUp').onclick=function(){
+		sendCommand(encodeURIComponent('+'));	
+	};
+
+	$('tooglePlay').onclick=function(){
+		sendCommand(' ');
+	};
+	
+	var sendCommand=function(cmd){
+		var aj=new BLauLib.Ajax();
+		aj.addVar("command",cmd);
+		aj.onLoaded=function(){}
+		aj.callPost("command");
+	};
 
 	var playMovie=function(strLink){
 		var aj=new BLauLib.Ajax();
@@ -63,6 +99,6 @@
 		aj.onLoaded=function(){
 		}
 		aj.callPost("pl");
-	}
+	};
 	</script>
 </html>

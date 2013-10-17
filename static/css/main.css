@@ -11,6 +11,22 @@ input{
 	font-size:10pt;
 }
 
+div.vid-controls{
+	position:fixed;
+	background:black;
+	width:100%;
+	left:0;
+	top:0;
+}
+
+input.btn-control{
+	margin: 0px;
+	padding: 0px;
+	float: left;
+	width: 33.33%;
+	font-size: 15pt;
+}
+
 div.green{
 	background:#B8E7AD;
 }
@@ -82,7 +98,7 @@ select{
 
 div.main{
 	padding-bottom:5%;
-	margin-top:5%;
+	margin-top:10%;
 	padding-top:5%;
 	margin-left:2.5%;
 	width:95%;

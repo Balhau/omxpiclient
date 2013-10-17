@@ -45,6 +45,7 @@ def killprocc():
 def message():
 	comm=request.form['command']
 	if comm:
+		print comm
 		return sendMsg(comm)
 	return '{"status":false,"code":1}'
 
@@ -72,7 +73,7 @@ def print_get():
 		return "false"
 
 def sh_quote(s):
-    si=s.replace(" ",'\\ ')
+    si=s.replace(" ",'\\ ').replace("(","\(").replace(')','\)')
     return si
 
 @app.route('/play',methods=['POST'])
