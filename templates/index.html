@@ -12,6 +12,9 @@
 				<input class="btn-control" type="button" id="sndUp" value="UP"/>
 				<input class="btn-control" type="button" id="sndDw" value="DW"/>
 				<input class="btn-control" type="button" id="tooglePlay" value="Pause/Play"/>
+				<input class="btn-control" type="button" id="forward" value="Forward"/>
+				<input class="btn-control" type="button" id="backward" value="Backwards"/>
+				<input class="btn-control" type="button" id="subtitles" value="Subtitles"/>
 			</div>
 			<select id="filesSelect">
 			</select>
@@ -58,6 +61,26 @@
     			aj.callPost("play");
 		}
 
+		var btns=[
+				['sndDw','-'],['sndUp','+'],['tooglePlay',' '],
+				['forward','o'],['backward','i'],['subtitles','s']
+			 ];
+		
+		var sendCommand=function(cmd){
+			var aj=new BLauLib.Ajax();
+			aj.addVar("command",encodeURIComponent(cmd));
+			aj.onLoaded=function(){};
+			aj.callPost("command");
+		};
+		
+                btns.BMap(function(el,pos){
+			var btn=el[0];
+			var com=el[1];
+			$(btn).onclick=function(){
+				sendCommand(com);
+			}
+		});
+		/*
 		$('sndDw').onclick=function(){
 			sendCommand('-');
 		};
@@ -69,6 +92,7 @@
 		$('tooglePlay').onclick=function(){
 			sendCommand(' ');
 		};
+		*/
 	
 		var sendCommand=function(cmd){
 			var aj=new BLauLib.Ajax();

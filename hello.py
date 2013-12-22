@@ -73,7 +73,8 @@ def print_get():
 		return "false"
 
 def sh_quote(s):
-    si=s.replace(" ",'\\ ').replace("(","\(").replace(')','\)')
+    si=s.replace(" ",'\\ ').replace("(","\(").replace(')','\)').replace("'","\\'")
+    print si
     return si
 
 @app.route('/play',methods=['POST'])

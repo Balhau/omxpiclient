@@ -7,24 +7,21 @@ body{
 }
 
 input{
-	width:90%;
+	width: 100%;
 	font-size:10pt;
 }
 
 div.vid-controls{
-	position:fixed;
-	background:black;
+	background-color:rgb(180, 184, 206);
 	width:100%;
-	left:0;
-	top:0;
+	overflow:auto;
 }
 
 input.btn-control{
+	width:auto;
 	margin: 0px;
-	padding: 0px;
-	float: left;
-	width: 33.33%;
-	font-size: 15pt;
+	margin-top:10px;
+	margin-bottom:10px;
 }
 
 div.green{
@@ -46,7 +43,7 @@ div.hidden{
 div.list-container{
 	margin:auto;
 	margin-top: 2%;
-	width: 90%;
+	width: 100%;
 	padding-top:2%;
 	padding-bottom:2%;
 	background-color: #EFF7F4;
@@ -90,7 +87,7 @@ label.title-form{
 
 select{
 	margin:0 auto;
-	width:90%;
+	width:100%;
 	background:black;
 	color:white;
 	font-size:14pt;
@@ -105,7 +102,7 @@ div.main{
 	background-color:white;
 	overflow: auto;
 	min-height:80%;
-	text-align:center;
+	#text-align:center;
 }
 div.button{
 	width:50%;
