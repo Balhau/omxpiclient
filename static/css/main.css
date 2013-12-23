@@ -28,6 +28,35 @@ div.green{
 	background:#B8E7AD;
 }
 
+div.menu{
+	text-align:center;
+	
+}
+
+div.menu_item{
+	background: gainsboro;
+	margin-top: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+div.menu_title{
+	font-size:35pt;
+	color:#FD4545
+}
+
+div.menu_desc{
+	font-size:8pt;
+}
+
+a:visited{
+	text-decoration: none !important;
+}
+
+a{
+	text-decoration: none !important;
+}
+
 div.red{
 	background:#E7ADAD;
 }
@@ -66,6 +95,13 @@ div.list-row{
 	padding-top: 1%;
 	padding-bottom: 1%;
 	cursor: pointer;
+}
+
+h1.header_one{
+	font-size:50pt;
+	text-align: center;
+	color: #E2E2E2;
+	background: #000000;
 }
 
 div.f_left{

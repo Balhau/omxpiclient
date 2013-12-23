@@ -4,6 +4,7 @@ from flask import render_template
 import subprocess,shlex,json,os,signal
 from os import listdir
 from os.path import isfile, join
+from radio import *
 
 
 app=Flask(__name__)
@@ -98,6 +99,43 @@ def list_dir():
 	if path :
 		jsData=[f for f in listdir(path) if f[-3:] in extensions]
 		return json.dumps(jsData)
+
+
+@app.route('/radio',methods=['GET'])
+def radio():
+	return render_template('radio.html')
+
+
+@app.route('/local',methods=['GET'])
+def local():
+	return render_template('local.html')
+
+
+@app.route('/radiocountries',methods=['GET'])
+def getradiocountries():
+	r=RadioService()
+	countries=r.getCountries()
+	nlist=[]
+	for country in countries:
+		aux={}
+		aux["link"]=country.attrib['href']
+		#aux["name"]=country.text_content()
+		nlist.append(aux)
+	return json.dumps(nlist)
+
+@app.route('/countryradios',methods=['POST'])
+def getradiocountry():
+	country=request.form['country']
+	print country
+	r=RadioService()
+	radios=r.getCountryRadio(country)
+	nlist=[]
+	for radio in radios:
+		aux={}
+		aux["link"]=radio.attrib['href']
+		aux["name"]=radio.text_content()
+		nlist.append(aux)
+	return json.dumps(nlist)
 
 if __name__ == '__main__':
 	app.debug=True

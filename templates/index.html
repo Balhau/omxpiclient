@@ -8,97 +8,38 @@
 	</head>
 	<body>
 		<div class="main">
-			<div class="vid-controls">
-				<input class="btn-control" type="button" id="sndUp" value="UP"/>
-				<input class="btn-control" type="button" id="sndDw" value="DW"/>
-				<input class="btn-control" type="button" id="tooglePlay" value="Pause/Play"/>
-				<input class="btn-control" type="button" id="forward" value="Forward"/>
-				<input class="btn-control" type="button" id="backward" value="Backwards"/>
-				<input class="btn-control" type="button" id="subtitles" value="Subtitles"/>
-			</div>
-			<select id="filesSelect">
-			</select>
-			<input type="text" id="folder" value="/home/pi/"/>
-			<input type="button" id="play" value="Play"/>
-			<input type="button" id="list" value="List Files"/>
-			<input type="button" id="stop" value="Stop"/>
+			<h1 class="header_one">BaMeCe</h1>
 			
+			<div class="menu">
+				<div class="menu_item">
+					<a href="/radio">
+						<div class="menu_title">Radio</div>
+					</a>
+					<div class="menu_desc">
+						Here you can select your radio station play the radio selected
+					</div>
+					<div class="menu_foot"></div>
+				</div>
+
+				<div class="menu_item">
+				
+				<a href="/youtube">
+					<div class="menu_title">Youtube</div>
+				</a>
+				
+				<div class="menu_desc">
+					Here you can search throught youtube and play the movies you choose
+				</div>
+				</div>
+				
+				<div class="menu_item">
+				<a href="/local">
+					<div class="menu_title">Local</div>
+				</a>
+				<div class="menu_desc">
+					Here you can search through local files to play media content
+				</div>
+			</div>
 		</div>
 	</body>
-	<script>
-		var sel=$("filesSelect");
-		var CreateData=function(data){
-			var str="";
-			for(var i=0;i<data.length;i++){
-				str+="<option>"+data[i]+"</option>";
-			}
-			sel.innerHTML=str;
-		}
-		$('stop').onclick=function(){
-			var aj=new BLauLib.Ajax();
-			aj.open("GET","/killomx");
-			aj.send(null);
-			$('play').disabled=false;
-			$('play').value="Play";
-		}
-		$('list').onclick=function(){
-    			var aj=new BLauLib.Ajax();
-    			aj.addVar("path",$('folder').value);
-    			aj.onLoaded=function(){
-        			var data=aj.getJSON();
-        			CreateData(data);
-    			}
-    			aj.callPost("listdir");
-		}
-		$('play').onclick=function(){
-    			var aj=new BLauLib.Ajax();
-    			aj.addVar("path",$('folder').value);
-    			aj.addVar("file",$('filesSelect').value);
-    			aj.onLoaded=function(){
-         			$('play').disabled=true;
-				$('play').value="Playing";
-    			}
-    			aj.callPost("play");
-		}
-
-		var btns=[
-				['sndDw','-'],['sndUp','+'],['tooglePlay',' '],
-				['forward','o'],['backward','i'],['subtitles','s']
-			 ];
-		
-		var sendCommand=function(cmd){
-			var aj=new BLauLib.Ajax();
-			aj.addVar("command",encodeURIComponent(cmd));
-			aj.onLoaded=function(){};
-			aj.callPost("command");
-		};
-		
-                btns.BMap(function(el,pos){
-			var btn=el[0];
-			var com=el[1];
-			$(btn).onclick=function(){
-				sendCommand(com);
-			}
-		});
-		/*
-		$('sndDw').onclick=function(){
-			sendCommand('-');
-		};
-
-		$('sndUp').onclick=function(){
-			sendCommand('+');	
-		};
-
-		$('tooglePlay').onclick=function(){
-			sendCommand(' ');
-		};
-		*/
-	
-		var sendCommand=function(cmd){
-			var aj=new BLauLib.Ajax();
-			aj.addVar("command",encodeURIComponent(cmd));
-			aj.onLoaded=function(){}
-			aj.callPost("command");
-		};
-	</script>
 </html>
