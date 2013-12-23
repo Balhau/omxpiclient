@@ -15,17 +15,22 @@ class RadioService:
 	
 	def getCountryRadio(self,countryPage):
 		doc=html.parse(self.url+'/'+countryPage)
-		lines=doc.xpath("//table[@id='thetable3']//a")
-		return lines
+		radios=doc.xpath("//table[@id='thetable3']//td[1]//a")
+		lines=doc.xpath("//table[@id='thetable3']//td[4]")
+		channels=[]
+		for line in lines:
+			channels.append(line.findall("a"))
+		return [radios,channels]
 		
-#r=RadioService()
+r=RadioService()
 #c=r.getCountries()
-#p=r.getCountryRadio('portugal.html')
+p=r.getCountryRadio('portugal.html')
 
+#print p[1]
 #for radio in p:
 #	print html.tostring(radio)
 
-#for country in c:
-#	print country.attrib['href']
-#	print country.text_content()
-#	print html.tostring(country)
+#for radio in p[0]:
+#	print radio.attrib['href']
+#	print radio.text_content()
+#	print html.tostring(radio)

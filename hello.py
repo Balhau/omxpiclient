@@ -129,12 +129,22 @@ def getradiocountry():
 	print country
 	r=RadioService()
 	radios=r.getCountryRadio(country)
+	r=radios[0]
+	e=radios[1]
 	nlist=[]
-	for radio in radios:
+	pos=0
+	for radio in r:
 		aux={}
 		aux["link"]=radio.attrib['href']
 		aux["name"]=radio.text_content()
+		aux["endpoints"]=[]
+		for endp in e[pos]:
+				aux2={}
+				aux2["link"]=endp.attrib['href']
+				aux2["name"]=endp.text_content()
+				aux["endpoints"].append(aux2)
 		nlist.append(aux)
+		pos=pos+1
 	return json.dumps(nlist)
 
 if __name__ == '__main__':
