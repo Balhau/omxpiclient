@@ -12,8 +12,49 @@
 			
 			<div class="menu">
 				<div class="menu_item">
+					<div class="menu_title">Country</div>
+						<select id="c_select">
+						</select>
+				</div>
+				<div class="menu_item">
+					<div class="menu_title">Radio</div>
+					<select id="r_select">
+					</select>
 				</div>
 			</div>
 		</div>
 	</body>
+	<script>
+	
+	$('c_select').onchange=function(){
+		var sel=$('c_select');
+		var country=sel[sel.selectedIndex].value;
+		var aj=new BLauLib.Ajax();
+		aj.addVar('country',country);
+		aj.onLoaded=function(){
+			var rdata=aj.getJSON();
+			var options=rdata.BMap(function(el,pos){
+				return "<option value='"+el.link+"'>"+el.name+"</option>";
+			});
+			$('r_select').innerHTML=options.join('');		
+		}
+		aj.callPost("countryradios");
+	}
+	
+	var loadCountries=function(){
+		var controller="/radiocountries";
+		var aj=new BLauLib.Ajax();
+		aj.onLoaded=function(){
+			var cdata=aj.getJSON();
+			var options=cdata.BMap(function(el,pos){
+				 return "<option value='"+el.link+"'>"+el.name+"</option>";
+			});
+			$('c_select').innerHTML=options.join('');
+		}
+		aj.open("GET",controller);
+		aj.send(null);
+	};
+
+	loadCountries();
+	</script>
 </html>

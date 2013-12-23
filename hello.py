@@ -119,7 +119,7 @@ def getradiocountries():
 	for country in countries:
 		aux={}
 		aux["link"]=country.attrib['href']
-		#aux["name"]=country.text_content()
+		aux["name"]=country.text_content()
 		nlist.append(aux)
 	return json.dumps(nlist)
 
