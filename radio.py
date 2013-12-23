@@ -18,6 +18,7 @@ class RadioService:
 		radios=doc.xpath("//table[@id='thetable3']//td[1]//a")
 		lines=doc.xpath("//table[@id='thetable3']//td[4]")
 		channels=[]
+		lines=lines[1:]
 		for line in lines:
 			channels.append(line.findall("a"))
 		return [radios,channels]
