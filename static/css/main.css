@@ -75,7 +75,9 @@ a:visited{
 }
 
 a{
+	color: #E2E2E2;
 	text-decoration: none !important;
+	
 }
 
 div.red{
