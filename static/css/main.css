@@ -12,9 +12,10 @@ input{
 }
 
 div.vid-controls{
-	background-color:rgb(180, 184, 206);
+	background-color:black;
 	width:100%;
 	overflow:auto;
+	text-align: center;
 }
 
 input.button{
@@ -30,6 +31,18 @@ input.btn-control{
 	margin: 0px;
 	margin-top:10px;
 	margin-bottom:10px;
+	color:#FD4545;
+	background:black;
+	font-weight:bold;
+	text-transform:uppercase;
+	font-size:20pt;
+	border-width: 1px;
+	border-style: dotted;
+	cursor: pointer;
+}
+
+.text_center{
+	text-align: center;
 }
 
 div.green{
