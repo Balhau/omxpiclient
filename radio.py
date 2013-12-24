@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from lxml import html
+import os
 #print html.parse('http://someurl.at.domain').xpath('//body')[0].text_content()
 
 class RadioService:
@@ -22,11 +23,20 @@ class RadioService:
 		for line in lines:
 			channels.append(line.findall("a"))
 		return [radios,channels]
+	
+	def playRadio(self,radioStation):
+		os.system("mpc clear")
+		os.system("mpc add "+radioStation)
+		os.system('mpc play')
+		
+	def stopRadio(self):
+		os.system('mpc clear')
 		
 r=RadioService()
 #c=r.getCountries()
-p=r.getCountryRadio('portugal.html')
+#p=r.getCountryRadio('portugal.html')
 
+#r.playRadio("mms://195.245.168.21/antena1")
 #print p[1]
 #for radio in p:
 #	print html.tostring(radio)

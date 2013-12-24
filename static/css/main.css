@@ -17,6 +17,14 @@ div.vid-controls{
 	overflow:auto;
 }
 
+input.button{
+	color:#FD4545;
+	font-weight:bold;
+	text-transform:uppercase;
+	font-size:20pt;
+	background:black
+}
+
 input.btn-control{
 	width:auto;
 	margin: 0px;
