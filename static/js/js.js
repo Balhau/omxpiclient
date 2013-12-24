@@ -1527,6 +1527,19 @@ Array.prototype.AMap = function(callback) {
 	return out;
 };
 
+Array.prototype.BMap=function(f){
+   if (!BLauLib.isFunction(f))
+		return this.clona();
+   var l=this.length;
+   var out=[];
+   var aux;
+   for(var i=0;i<l;i++){
+      aux=f(this[i],i);
+      if(!BLauLib.isUndefOrNull(aux)) out[out.length]=aux;
+   }
+   return out;
+};
+
 Array.prototype.getObjectBy = function(paramname, value) {
 	var prop = null;
 	for ( var i = 0; i < this.length; i++) {

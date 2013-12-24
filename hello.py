@@ -4,6 +4,7 @@ from flask import render_template
 import subprocess,shlex,json,os,signal
 from os import listdir
 from os.path import isfile, join
+from radio import *
 
 
 app=Flask(__name__)
@@ -73,7 +74,8 @@ def print_get():
 		return "false"
 
 def sh_quote(s):
-    si=s.replace(" ",'\\ ').replace("(","\(").replace(')','\)')
+    si=s.replace(" ",'\\ ').replace("(","\(").replace(')','\)').replace("'","\\'")
+    print si
     return si
 
 @app.route('/play',methods=['POST'])
@@ -97,6 +99,64 @@ def list_dir():
 	if path :
 		jsData=[f for f in listdir(path) if f[-3:] in extensions]
 		return json.dumps(jsData)
+
+
+@app.route('/radio',methods=['GET'])
+def radio():
+	return render_template('radio.html')
+
+
+@app.route('/local',methods=['GET'])
+def local():
+	return render_template('local.html')
+
+
+@app.route('/radiocountries',methods=['GET'])
+def getradiocountries():
+	r=RadioService()
+	countries=r.getCountries()
+	nlist=[]
+	for country in countries:
+		aux={}
+		aux["link"]=country.attrib['href']
+		aux["name"]=country.text_content()
+		nlist.append(aux)
+	return json.dumps(nlist)
+
+@app.route('/countryradios',methods=['POST'])
+def getradiocountry():
+	country=request.form['country']
+	print country
+	r=RadioService()
+	radios=r.getCountryRadio(country)
+	r=radios[0]
+	e=radios[1]
+	nlist=[]
+	pos=0
+	for radio in r:
+		aux={}
+		aux["link"]=radio.attrib['href']
+		aux["name"]=radio.text_content()
+		aux["endpoints"]=[]
+		for endp in e[pos]:
+				aux2={}
+				aux2["link"]=endp.attrib['href']
+				aux2["name"]=endp.text_content()
+				aux["endpoints"].append(aux2)
+		nlist.append(aux)
+		pos=pos+1
+	return json.dumps(nlist)
+
+@app.route('/playradio',methods=['POST'])
+def playRadio():
+	radio=request.form['radio']
+	r=RadioService()
+	r.playRadio(radio)
+	
+@app.route('/stopradio',methods=['GET'])
+def stopRadio():
+	r=RadioService()
+	r.stopRadio()
 
 if __name__ == '__main__':
 	app.debug=True
