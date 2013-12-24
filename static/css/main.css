@@ -12,32 +12,37 @@ input{
 }
 
 div.vid-controls{
-	background-color:black;
+	background-color:gainsboro;
 	width:100%;
 	overflow:auto;
 	text-align: center;
 }
 
 input.button{
-	color:#FD4545;
-	font-weight:bold;
-	text-transform:uppercase;
-	font-size:20pt;
-	background:black
+/* 	color:#FD4545; */
+/* 	font-weight:bold; */
+/* 	text-transform:uppercase; */
+/* 	font-size:20pt; */
+/* 	background:black */
+color: #FD4545;
+text-transform: uppercase;
+font-size: 20pt;
+font-family: Helvetica;
+background: rgb(221, 221, 221);
 }
 
 input.btn-control{
-	width:auto;
+	width: auto;
 	margin: 0px;
-	margin-top:10px;
-	margin-bottom:10px;
-	color:#FD4545;
-	background:black;
-	font-weight:bold;
-	text-transform:uppercase;
-	font-size:20pt;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #FFFFFF;
+	background: rgb(183, 184, 182);
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 20pt;
 	border-width: 1px;
-	border-style: dotted;
+	border-style: none;
 	cursor: pointer;
 }
 
