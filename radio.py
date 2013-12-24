@@ -25,9 +25,15 @@ class RadioService:
 			channels.append(line.findall("a"))
 		return [radios,channels]
 	
+<<<<<<< HEAD
 	def playRadio(self,streamEndPoint):
 		os.system('mpc clear');
 		os.system('mpc add '+streamEndPoint)
+=======
+	def playRadio(self,radioStation):
+		os.system("mpc clear")
+		os.system("mpc add "+radioStation)
+>>>>>>> radio
 		os.system('mpc play')
 		
 	def stopRadio(self):
@@ -37,8 +43,7 @@ r=RadioService()
 #c=r.getCountries()
 #p=r.getCountryRadio('portugal.html')
 
-
-
+#r.playRadio("mms://195.245.168.21/antena1")
 #print p[1]
 #for radio in p:
 #	print html.tostring(radio)

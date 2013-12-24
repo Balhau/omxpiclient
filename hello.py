@@ -126,7 +126,6 @@ def getradiocountries():
 @app.route('/countryradios',methods=['POST'])
 def getradiocountry():
 	country=request.form['country']
-	print country
 	r=RadioService()
 	radios=r.getCountryRadio(country)
 	r=radios[0]
@@ -149,14 +148,16 @@ def getradiocountry():
 
 @app.route('/playradio',methods=['POST'])
 def playRadio():
-	radio=request.form['radio']
+	radioStation=request.form['radio']
 	r=RadioService()
-	r.playRadio(radio)
-	
+	r.playRadio(radioStation)
+	return '{"status":true}'
+		
 @app.route('/stopradio',methods=['GET'])
 def stopRadio():
 	r=RadioService()
 	r.stopRadio()
+	return '{"status":true}'
 
 if __name__ == '__main__':
 	app.debug=True

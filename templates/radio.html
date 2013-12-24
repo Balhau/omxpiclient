@@ -25,6 +25,12 @@
 					<div class="menu_title">Channel</div>
 					<select id="p_select"></select>
 				</div>
+				<div class="menu_item">
+					<div class="menu_title">
+						<input class="button" type="button" value="play" id="bplay"/>
+						<input class="button" type="button" value="stop" id="bstop"/>
+					</div>
+				</div>
 			</div>
 		</div>
 	</body>
@@ -36,6 +42,23 @@
 		}
 		return null;
 	};
+	
+	$('bplay').onclick=function(){
+		var selR=$('p_select');
+		var nchannel=selR[selR.selectedIndex].value;
+		var aj=new BLauLib.Ajax();
+		aj.addVar('radio',nchannel);
+		aj.onLoaded=function(){		
+		};
+		aj.callPost("playradio");
+	};
+	
+	$('bstop').onclick=function(){
+		var aj=new BLauLib.Ajax();
+		aj.open("GET","/stopradio");
+		aj.send(null);
+	};
+	
 	$('c_select').onchange=function(){
 		var sel=$('c_select');
 		var country=sel[sel.selectedIndex].value;
