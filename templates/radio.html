@@ -1,0 +1,80 @@
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link href="static/css/main.css" type="text/css" rel="stylesheet" >
+		<script src="static/js/js.js"></script>
+		<title>PIOmxControl</title>
+	</head>
+	<body>
+		<div class="main">
+			<h1 class="header_one">BaMeCe</h1>
+			
+			<div class="menu">
+				<div class="menu_item">
+					<div class="menu_title">Country</div>
+					<select id="c_select">
+					</select>
+				</div>
+				<div class="menu_item">
+					<div class="menu_title">Radio</div>
+					<select id="r_select">
+					</select>
+				</div>
+				<div class="menu_item">
+					<div class="menu_title">Channel</div>
+					<select id="p_select"></select>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+	var radioOptions=null;
+	var getEndPoints=function(name){
+		for(var i=0;i<radioOptions.length;i++){
+			if(name==radioOptions[i].name) return radioOptions[i].endpoints;
+		}
+		return null;
+	};
+	$('c_select').onchange=function(){
+		var sel=$('c_select');
+		var country=sel[sel.selectedIndex].value;
+		var aj=new BLauLib.Ajax();
+		aj.addVar('country',country);
+		aj.onLoaded=function(){
+			radioOptions=aj.getJSON();
+			var rdata=radioOptions.BMap(function(el,pos){
+				return "<option value='"+el.link+"'>"+el.name+"</option>";
+			});
+			$('r_select').innerHTML=rdata.join('');		
+		}
+		aj.callPost("countryradios");
+	};
+
+	$('r_select').onchange=function(){
+		var selR=$('r_select');
+		var nchannel=selR[selR.selectedIndex].innerHTML;
+		var el=getEndPoints(nchannel);
+		var ops=el.BMap(function(el,pos){
+			return "<option value='"+el.link+"'>"+el.name+"</option>"
+		});
+		$('p_select').innerHTML=ops.join('');
+	};
+	
+	var loadCountries=function(){
+		var controller="/radiocountries";
+		var aj=new BLauLib.Ajax();
+		aj.onLoaded=function(){
+			var cdata=aj.getJSON();
+			var options=cdata.BMap(function(el,pos){
+				 return "<option value='"+el.link+"'>"+el.name+"</option>";
+			});
+			$('c_select').innerHTML=options.join('');
+		}
+		aj.open("GET",controller);
+		aj.send(null);
+	};
+
+	loadCountries();
+	</script>
+</html>
