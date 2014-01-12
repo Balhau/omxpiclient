@@ -94,7 +94,7 @@ def print_post():
 
 @app.route('/listdir',methods=['POST'])
 def list_dir():
-	extensions=['mp4','mkv','avi','flv']
+	extensions=['mp4','mkv','avi','flv','mp3']
 	path=request.form['path']
 	if path :
 		jsData=[f for f in listdir(path) if f[-3:] in extensions]
