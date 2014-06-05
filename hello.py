@@ -23,7 +23,9 @@ def youtube():
 def teste():
 	global omxProcess
 	os.system('killall omxplayer.bin')
+	os.system('killall youtube-dl')
 	url=request.form['url']
+	print "Play: "+url
 	if url:
 		cmdLine='omxplayyt "'+url+'"'
 		args=shlex.split(cmdLine)
@@ -97,7 +99,8 @@ def list_dir():
 	extensions=['mp4','mkv','avi','flv','mp3']
 	path=request.form['path']
 	if path :
-		jsData=[f for f in listdir(path) if f[-3:] in extensions]
+		jsData=[f for f in listdir(path) if f[-3:] in extensions or os.path.isdir(os.path.join(path,f))]
+		jsData.append("../")
 		return json.dumps(jsData)
 
 

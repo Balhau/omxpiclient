@@ -25,7 +25,7 @@ input.button{
 /* 	font-size:20pt; */
 /* 	background:black */
 color: #FD4545;
-text-transform: uppercase;
+border-width:0px;
 font-size: 20pt;
 font-family: Helvetica;
 background: rgb(221, 221, 221);

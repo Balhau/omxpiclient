@@ -99,7 +99,7 @@
 
 	var playMovie=function(strLink){
 		var aj=new BLauLib.Ajax();
-		aj.addVar('url',strLink);
+		aj.addVar('url',encodeURIComponent(strLink));
 		aj.onLoaded=function(){
 		}
 		aj.callPost("pl");
