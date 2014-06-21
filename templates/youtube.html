@@ -78,24 +78,33 @@
 
 	};
 
-	$('sndDw').onclick=function(){
-		sendCommand('-');
-	};
 
-	$('sndUp').onclick=function(){
-		sendCommand('+');	
-	};
+                var btns=[
+                                ['sndDw','-'],['sndUp','+'],['tooglePlay',' '],
+                                ['forward','o'],['backward','i'],['subtitles','s']
+                         ];
 
-	$('tooglePlay').onclick=function(){
-		sendCommand(' ');
-	};
+                var sendCommand=function(cmd){
+                        var aj=new BLauLib.Ajax();
+                        aj.addVar("command",encodeURIComponent(cmd));
+                        aj.onLoaded=function(){};
+                        aj.callPost("command");
+                };
+
+                btns.BMap(function(el,pos){
+                        var btn=el[0];
+                        var com=el[1];
+                        $(btn).onclick=function(){
+                                sendCommand(com);
+                        }
+                });
 	
-	var sendCommand=function(cmd){
+	   var sendCommand=function(cmd){
 		var aj=new BLauLib.Ajax();
 		aj.addVar("command",encodeURIComponent(cmd));
 		aj.onLoaded=function(){}
 		aj.callPost("command");
-	};
+	    };
 
 	var playMovie=function(strLink){
 		var aj=new BLauLib.Ajax();

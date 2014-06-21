@@ -132,6 +132,34 @@ cdef class iterparse:
         def __get__(self):
             return self._parser.feed_error_log
 
+    property resolvers:
+        u"""The custom resolver registry of the last (or current) parser run.
+        """
+        def __get__(self):
+            return self._parser.resolvers
+
+    property version:
+        u"""The version of the underlying XML parser."""
+        def __get__(self):
+            return self._parser.version
+
+    def set_element_class_lookup(self, ElementClassLookup lookup = None):
+        u"""set_element_class_lookup(self, lookup = None)
+
+        Set a lookup scheme for element classes generated from this parser.
+
+        Reset it by passing None or nothing.
+        """
+        self._parser.set_element_class_lookup(lookup)
+
+    def makeelement(self, _tag, attrib=None, nsmap=None, **_extra):
+        u"""makeelement(self, _tag, attrib=None, nsmap=None, **_extra)
+
+        Creates a new element associated with this parser.
+        """
+        self._parser.makeelement(
+            _tag, attrib=None, nsmap=None, **_extra)
+
     @cython.final
     cdef _close_source(self):
         if self._source is None:
@@ -277,7 +305,7 @@ cdef class iterwalk:
                 return self._pop_event(0)
         raise StopIteration
 
-    cdef int _start_node(self, _Element node):
+    cdef int _start_node(self, _Element node) except -1:
         cdef int ns_count
         if self._event_filter & PARSE_EVENT_FILTER_START_NS:
             ns_count = _appendStartNsEvents(node._c_node, self._events)
@@ -315,7 +343,7 @@ cdef int _countNsDefs(xmlNode* c_node):
     return count
 
 
-cdef int _appendStartNsEvents(xmlNode* c_node, list event_list):
+cdef int _appendStartNsEvents(xmlNode* c_node, list event_list) except -1:
     cdef xmlNs* c_ns
     cdef int count
     count = 0

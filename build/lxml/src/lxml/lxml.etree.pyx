@@ -94,7 +94,40 @@ from itertools import islice
 
 cdef object ITER_EMPTY = iter(())
 
-cdef object EMPTY_READ_ONLY_DICT = python.PyDictProxy_New({})
+try:
+    from collections.abc import MutableMapping  # Py3.3+
+except ImportError:
+    try:
+        from collections import MutableMapping  # Py2.6+
+    except ImportError:
+        from UserDict import UserDict as MutableMapping  # Py2.[45]
+        class MutableMapping(MutableMapping):
+            def keys(self):
+                return []
+
+class _ImmutableMapping(MutableMapping):
+    def __getitem__(self, key):
+        raise KeyError, key
+
+    def __setitem__(self, key, value):
+        raise KeyError, key
+
+    def __delitem__(self, key):
+        raise KeyError, key
+
+    def __contains__(self, key):
+        return False
+
+    def __len__(self):
+        return 0
+
+    def __iter__(self):
+        return ITER_EMPTY
+    iterkeys = itervalues = iteritems = __iter__
+
+cdef object IMMUTABLE_EMPTY_MAPPING = _ImmutableMapping()
+del MutableMapping, _ImmutableMapping
+
 
 # the rules
 # ---------
@@ -484,7 +517,6 @@ cdef _Document _documentFactory(xmlDoc* c_doc, _BaseParser parser):
     return result
 
 
-@cython.freelist(4)
 cdef class DocInfo:
     u"Document information provided by parser and DTD."
     cdef _Document _doc
@@ -582,7 +614,7 @@ cdef class DocInfo:
             return _dtdFactory(self._doc._c_doc.extSubset)
 
 
-@cython.freelist(16)
+@cython.no_gc_clear
 cdef public class _Element [ type LxmlElementType, object LxmlElement ]:
     u"""Element class.
 
@@ -591,7 +623,6 @@ cdef public class _Element [ type LxmlElementType, object LxmlElement ]:
     By pointing to a Document instance, a reference is kept to
     _Document as long as there is some pointer to a node in it.
     """
-    cdef python.PyObject* _gc_doc
     cdef _Document _doc
     cdef xmlNode* _c_node
     cdef object _tag
@@ -609,7 +640,6 @@ cdef public class _Element [ type LxmlElementType, object LxmlElement ]:
         if self._c_node is not NULL:
             _unregisterProxy(self)
             attemptDeallocation(self._c_node)
-        _releaseProxy(self)
 
     # MANIPULATORS
 
@@ -1531,7 +1561,7 @@ cdef class __ContentOnlyElement(_Element):
 
     property attrib:
         def __get__(self):
-            return {}
+            return IMMUTABLE_EMPTY_MAPPING
 
     property text:
         def __get__(self):
@@ -1663,7 +1693,6 @@ cdef class _Entity(__ContentOnlyElement):
         return u"&%s;" % self.name
 
 
-@cython.freelist(8)
 cdef class QName:
     u"""QName(text_or_uri_or_element, tag=None)
 
@@ -1732,7 +1761,6 @@ cdef class QName:
         return python.PyObject_RichCompare(one, other, op)
 
 
-@cython.freelist(8)
 cdef public class _ElementTree [ type LxmlElementTreeType,
                                  object LxmlElementTree ]:
     cdef _Document _doc
@@ -1742,7 +1770,8 @@ cdef public class _ElementTree [ type LxmlElementTreeType,
     # have a _context_node.  All methods should prefer self._context_node._doc
     # to honour tree restructuring.  _doc can happily be None!
 
-    cdef _assertHasRoot(self):
+    @cython.final
+    cdef int _assertHasRoot(self) except -1:
         u"""We have to take care here: the document may not have a root node!
         This can happen if ElementTree() is called without any argument and
         the caller 'forgets' to call parse() afterwards, so this is a bug in
@@ -1750,6 +1779,7 @@ cdef public class _ElementTree [ type LxmlElementTreeType,
         """
         assert self._context_node is not None, \
                u"ElementTree not initialized, missing root"
+        return 0
 
     def parse(self, source, _BaseParser parser=None, *, base_url=None):
         u"""parse(self, source, parser=None, base_url=None)
@@ -1794,17 +1824,15 @@ cdef public class _ElementTree [ type LxmlElementTreeType,
         cdef xmlDoc* c_doc
         if self._context_node is not None:
             root = self._context_node.__copy__()
+            assert root is not None
+            _assertValidNode(root)
             _copyNonElementSiblings(self._context_node._c_node, root._c_node)
             doc = root._doc
             c_doc = self._context_node._doc._c_doc
             if c_doc.intSubset is not NULL and doc._c_doc.intSubset is NULL:
-                doc._c_doc.intSubset = tree.xmlCopyDtd(c_doc.intSubset)
-                if doc._c_doc.intSubset is NULL:
-                    raise MemoryError()
+                doc._c_doc.intSubset = _copyDtd(c_doc.intSubset)
             if c_doc.extSubset is not NULL and not doc._c_doc.extSubset is NULL:
-                doc._c_doc.extSubset = tree.xmlCopyDtd(c_doc.extSubset)
-                if doc._c_doc.extSubset is NULL:
-                    raise MemoryError()
+                doc._c_doc.extSubset = _copyDtd(c_doc.extSubset)
             return _elementTreeFactory(None, root)
         elif self._doc is not None:
             _assertValidDoc(self._doc)
@@ -2006,11 +2034,8 @@ cdef public class _ElementTree [ type LxmlElementTreeType,
         self._assertHasRoot()
         root = self.getroot()
         if _isString(path):
-            start = path[:1]
-            if start == u"/":
-                path = u"." + path
-            elif start == b"/":
-                path = b"." + path
+            if path[:1] == "/":
+                path = "." + path
         return root.find(path, namespaces)
 
     def findtext(self, path, default=None, namespaces=None):
@@ -2026,11 +2051,8 @@ cdef public class _ElementTree [ type LxmlElementTreeType,
         self._assertHasRoot()
         root = self.getroot()
         if _isString(path):
-            start = path[:1]
-            if start == u"/":
-                path = u"." + path
-            elif start == b"/":
-                path = b"." + path
+            if path[:1] == "/":
+                path = "." + path
         return root.findtext(path, default, namespaces)
 
     def findall(self, path, namespaces=None):
@@ -2046,11 +2068,8 @@ cdef public class _ElementTree [ type LxmlElementTreeType,
         self._assertHasRoot()
         root = self.getroot()
         if _isString(path):
-            start = path[:1]
-            if start == u"/":
-                path = u"." + path
-            elif start == b"/":
-                path = b"." + path
+            if path[:1] == "/":
+                path = "." + path
         return root.findall(path, namespaces)
 
     def iterfind(self, path, namespaces=None):
@@ -2066,11 +2085,8 @@ cdef public class _ElementTree [ type LxmlElementTreeType,
         self._assertHasRoot()
         root = self.getroot()
         if _isString(path):
-            start = path[:1]
-            if start == u"/":
-                path = u"." + path
-            elif start == b"/":
-                path = b"." + path
+            if path[:1] == "/":
+                path = "." + path
         return root.iterfind(path, namespaces)
 
     def xpath(self, _path, *, namespaces=None, extensions=None,
@@ -2213,6 +2229,7 @@ cdef _ElementTree _newElementTree(_Document doc, _Element context_node,
     return result
 
 
+@cython.final
 @cython.freelist(16)
 cdef class _Attrib:
     u"""A dict-like proxy for the ``Element.attrib`` property.
@@ -2637,7 +2654,7 @@ cdef class ElementChildIterator(_ElementMatchIterator):
     u"""ElementChildIterator(self, node, tag=None, reversed=False)
     Iterates over the children of an element.
     """
-    def __cinit__(self, _Element node not None, tag=None, *, reversed=False):
+    def __cinit__(self, _Element node not None, tag=None, *, bint reversed=False):
         cdef xmlNode* c_node
         _assertValidNode(node)
         self._initTagMatcher(tag)
@@ -2659,7 +2676,7 @@ cdef class SiblingsIterator(_ElementMatchIterator):
 
     You can pass the boolean keyword ``preceding`` to specify the direction.
     """
-    def __cinit__(self, _Element node not None, tag=None, *, preceding=False):
+    def __cinit__(self, _Element node not None, tag=None, *, bint preceding=False):
         _assertValidNode(node)
         self._initTagMatcher(tag)
         if preceding:
@@ -2703,7 +2720,7 @@ cdef class ElementDepthFirstIterator:
     cdef _Element _next_node
     cdef _Element _top_node
     cdef _MultiTagMatcher _matcher
-    def __cinit__(self, _Element node not None, tag=None, *, inclusive=True):
+    def __cinit__(self, _Element node not None, tag=None, *, bint inclusive=True):
         _assertValidNode(node)
         self._top_node  = node
         self._next_node = node
@@ -2762,11 +2779,11 @@ cdef class ElementTextIterator:
     specific tag name.
 
     You can set the ``with_tail`` keyword argument to ``False`` to skip over
-    tail text.
+    tail text (e.g. if you know that it's only whitespace from pretty-printing).
     """
     cdef object _nextEvent
     cdef _Element _start_element
-    def __cinit__(self, _Element element not None, tag=None, *, with_tail=True):
+    def __cinit__(self, _Element element not None, tag=None, *, bint with_tail=True):
         _assertValidNode(element)
         if with_tail:
             events = (u"start", u"end")
@@ -2865,16 +2882,19 @@ def ProcessingInstruction(target, text=None):
 
 PI = ProcessingInstruction
 
-@cython.freelist(8)
 cdef class CDATA:
     u"""CDATA(data)
 
     CDATA factory.  This factory creates an opaque data object that
     can be used to set Element text.  The usual way to use it is::
 
-        >>> from lxml import etree
-        >>> el = etree.Element('content')
-        >>> el.text = etree.CDATA('a string')
+        >>> el = Element('content')
+        >>> el.text = CDATA('a string')
+
+        >>> print(el.text)
+        a string
+        >>> print(tostring(el, encoding="unicode"))
+        <content><![CDATA[a string]]></content>
     """
     cdef bytes _utf8_data
     def __cinit__(self, data):
@@ -2972,7 +2992,9 @@ def XML(text, _BaseParser parser=None, *, base_url=None):
     This function can be used to embed "XML literals" in Python code,
     like in
 
-       >>> root = etree.XML("<root><test/></root>")
+       >>> root = XML("<root><test/></root>")
+       >>> print(root.tag)
+       root
 
     To override the parser with a different ``XMLParser`` you can pass it to
     the ``parser`` keyword argument.
@@ -3022,6 +3044,9 @@ def fromstringlist(strings, _BaseParser parser=None):
     the ``parser`` keyword argument.
     """
     cdef _Document doc
+    if isinstance(strings, (bytes, unicode)):
+        raise ValueError("passing a single string into fromstringlist() is not"
+                         " efficient, use fromstring() instead")
     if parser is None:
         parser = __GLOBAL_PARSER_CONTEXT.getDefaultParser()
     feed = parser.feed
@@ -3138,7 +3163,7 @@ def tostring(element_or_tree, *, encoding=None, method=u"xml",
                          pretty_print, with_tail, is_standalone)
     else:
         raise TypeError, u"Type '%s' cannot be serialized." % \
-            python._fqtypename(element_or_tree)
+            python._fqtypename(element_or_tree).decode('utf8')
 
 def tostringlist(element_or_tree, *args, **kwargs):
     u"""tostringlist(element_or_tree, *args, **kwargs)
@@ -3159,7 +3184,7 @@ def tounicode(element_or_tree, *, method=u"xml", bint pretty_print=False,
     Serialize an element to the Python unicode representation of its XML
     tree.
 
-    :deprecated: use ``tostring(el, encoding=unicode)`` instead.
+    :deprecated: use ``tostring(el, encoding='unicode')`` instead.
 
     Note that the result does not carry an XML encoding declaration and is
     therefore not necessarily suited for serialization to byte streams without

@@ -235,11 +235,10 @@ lxml.html.clean.unichr	lxml.html.clean-module.html#unichr
 lxml.html.clean._break_text	lxml.html.clean-module.html#_break_text
 lxml.html.clean.basestring	lxml.html.clean-module.html#basestring
 lxml.html.clean._avoid_classes	lxml.html.clean-module.html#_avoid_classes
-lxml.html.clean._javascript_scheme_re	lxml.html.clean-module.html#_javascript_scheme_re
 lxml.html.clean.__package__	lxml.html.clean-module.html#__package__
 lxml.html.clean._avoid_elements	lxml.html.clean-module.html#_avoid_elements
 lxml.html.clean._find_external_links	lxml.html.clean-module.html#_find_external_links
-lxml.html.clean._insert_break	lxml.html.clean-module.html#_insert_break
+lxml.html.clean._is_javascript_scheme	lxml.html.clean-module.html#_is_javascript_scheme
 lxml.html.clean.autolink	lxml.html.clean-module.html#autolink
 lxml.html.clean._conditional_comment_re	lxml.html.clean-module.html#_conditional_comment_re
 lxml.html.clean._link_text	lxml.html.clean-module.html#_link_text
@@ -249,6 +248,7 @@ lxml.html.clean.clean_html	lxml.html.clean-module.html#clean_html
 lxml.html.clean._avoid_word_break_classes	lxml.html.clean-module.html#_avoid_word_break_classes
 lxml.html.clean._css_javascript_re	lxml.html.clean-module.html#_css_javascript_re
 lxml.html.clean.word_break	lxml.html.clean-module.html#word_break
+lxml.html.clean._insert_break	lxml.html.clean-module.html#_insert_break
 lxml.html.clean._break_prefer_re	lxml.html.clean-module.html#_break_prefer_re
 lxml.html.clean.clean	lxml.html.clean-module.html#clean
 lxml.html.clean._avoid_word_break_elements	lxml.html.clean-module.html#_avoid_word_break_elements
@@ -438,8 +438,10 @@ lxml.tests.common_imports.filter_by_version	lxml.tests.common_imports-module.htm
 lxml.tests.common_imports._get_caller_relative_path	lxml.tests.common_imports-module.html#_get_caller_relative_path
 lxml.tests.common_imports.unentitify	lxml.tests.common_imports-module.html#unentitify
 lxml.tests.common_imports.doctest_parser	lxml.tests.common_imports-module.html#doctest_parser
+lxml.tests.common_imports.fileUrlInTestDir	lxml.tests.common_imports-module.html#fileUrlInTestDir
 lxml.tests.common_imports.skipif	lxml.tests.common_imports-module.html#skipif
 lxml.tests.common_imports._fix_bytes	lxml.tests.common_imports-module.html#_fix_bytes
+lxml.tests.common_imports.path2url	lxml.tests.common_imports-module.html#path2url
 lxml.tests.common_imports._fix_exceptions	lxml.tests.common_imports-module.html#_fix_exceptions
 lxml.tests.common_imports.make_version_tuple	lxml.tests.common_imports-module.html#make_version_tuple
 lxml.tests.common_imports.ET_VERSION	lxml.tests.common_imports-module.html#ET_VERSION
@@ -471,7 +473,12 @@ lxml.tests.test_css	lxml.tests.test_css-module.html
 lxml.tests.test_css.__package__	lxml.tests.test_css-module.html#__package__
 lxml.tests.test_css.HTML	lxml.tests.test_css-module.html#HTML
 lxml.tests.test_css.test_suite	lxml.tests.test_css-module.html#test_suite
+lxml.tests.test_doctestcompare	lxml.tests.test_doctestcompare-module.html
+lxml.tests.test_doctestcompare.__package__	lxml.tests.test_doctestcompare-module.html#__package__
+lxml.tests.test_doctestcompare.test_suite	lxml.tests.test_doctestcompare-module.html#test_suite
+lxml.tests.test_doctestcompare.indent	lxml.tests.test_doctestcompare-module.html#indent
 lxml.tests.test_dtd	lxml.tests.test_dtd-module.html
+lxml.tests.test_dtd.fileUrlInTestDir	lxml.tests.common_imports-module.html#fileUrlInTestDir
 lxml.tests.test_dtd.make_doctest	lxml.tests.common_imports-module.html#make_doctest
 lxml.tests.test_dtd.fileInTestDir	lxml.tests.common_imports-module.html#fileInTestDir
 lxml.tests.test_dtd.__package__	lxml.tests.test_dtd-module.html#__package__
@@ -501,7 +508,9 @@ lxml.tests.test_etree._str	lxml.tests.common_imports-module.html#_str
 lxml.tests.test_etree._bytes	lxml.tests.common_imports-module.html#_bytes
 lxml.tests.test_etree.canonicalize	lxml.tests.common_imports-module.html#canonicalize
 lxml.tests.test_etree.__package__	lxml.tests.test_etree-module.html#__package__
+lxml.tests.test_etree.fileUrlInTestDir	lxml.tests.common_imports-module.html#fileUrlInTestDir
 lxml.tests.test_etree.this_dir	lxml.tests.test_etree-module.html#this_dir
+lxml.tests.test_etree.path2url	lxml.tests.common_imports-module.html#path2url
 lxml.tests.test_etree.read_file	lxml.tests.common_imports-module.html#read_file
 lxml.tests.test_etree.sorted	lxml.tests.common_imports-module.html#sorted
 lxml.tests.test_etree.fileInTestDir	lxml.tests.common_imports-module.html#fileInTestDir
@@ -532,7 +541,6 @@ lxml.tests.test_io.read_file	lxml.tests.common_imports-module.html#read_file
 lxml.tests.test_io.this_dir	lxml.tests.test_io-module.html#this_dir
 lxml.tests.test_io.__package__	lxml.tests.test_io-module.html#__package__
 lxml.tests.test_io.write_to_file	lxml.tests.common_imports-module.html#write_to_file
-lxml.tests.test_io.fileInTestDir	lxml.tests.common_imports-module.html#fileInTestDir
 lxml.tests.test_io.test_suite	lxml.tests.test_io-module.html#test_suite
 lxml.tests.test_isoschematron	lxml.tests.test_isoschematron-module.html
 lxml.tests.test_isoschematron.make_doctest	lxml.tests.common_imports-module.html#make_doctest
@@ -2675,13 +2683,17 @@ lxml.etree._ElementTree.iter	lxml.etree._ElementTree-class.html#iter
 lxml.etree._ElementTree.getiterator	lxml.etree._ElementTree-class.html#getiterator
 lxml.etree._ElementTree.__copy__	lxml.etree._ElementTree-class.html#__copy__
 lxml.etree.iterparse	lxml.etree.iterparse-class.html
-lxml.etree.iterparse.__new__	lxml.etree.iterparse-class.html#__new__
-lxml.etree.iterparse.__next__	lxml.etree.iterparse-class.html#__next__
-lxml.etree.iterparse.next	lxml.etree.iterparse-class.html#next
-lxml.etree.iterparse.error_log	lxml.etree.iterparse-class.html#error_log
-lxml.etree.iterparse.__iter__	lxml.etree.iterparse-class.html#__iter__
-lxml.etree.iterparse.root	lxml.etree.iterparse-class.html#root
+lxml.etree.iterparse.set_element_class_lookup	lxml.etree.iterparse-class.html#set_element_class_lookup
 lxml.etree.iterparse.__init__	lxml.etree.iterparse-class.html#__init__
+lxml.etree.iterparse.__new__	lxml.etree.iterparse-class.html#__new__
+lxml.etree.iterparse.next	lxml.etree.iterparse-class.html#next
+lxml.etree.iterparse.version	lxml.etree.iterparse-class.html#version
+lxml.etree.iterparse.__next__	lxml.etree.iterparse-class.html#__next__
+lxml.etree.iterparse.makeelement	lxml.etree.iterparse-class.html#makeelement
+lxml.etree.iterparse.__iter__	lxml.etree.iterparse-class.html#__iter__
+lxml.etree.iterparse.resolvers	lxml.etree.iterparse-class.html#resolvers
+lxml.etree.iterparse.error_log	lxml.etree.iterparse-class.html#error_log
+lxml.etree.iterparse.root	lxml.etree.iterparse-class.html#root
 lxml.etree.iterwalk	lxml.etree.iterwalk-class.html
 lxml.etree.iterwalk.__new__	lxml.etree.iterwalk-class.html#__new__
 lxml.etree.iterwalk.__next__	lxml.etree.iterwalk-class.html#__next__
@@ -4492,6 +4504,7 @@ lxml.tests.test_classlookup.ClassLookupTestCase.test_class_lookup_reentry	lxml.t
 lxml.tests.test_classlookup.ClassLookupTestCase.test_lookup_without_fallback	lxml.tests.test_classlookup.ClassLookupTestCase-class.html#test_lookup_without_fallback
 lxml.tests.test_classlookup.ClassLookupTestCase.test_custom_lookup_ns_fallback	lxml.tests.test_classlookup.ClassLookupTestCase-class.html#test_custom_lookup_ns_fallback
 lxml.tests.test_classlookup.ClassLookupTestCase.test_class_lookup_type_mismatch	lxml.tests.test_classlookup.ClassLookupTestCase-class.html#test_class_lookup_type_mismatch
+lxml.tests.test_classlookup.ClassLookupTestCase.test_default_class_lookup_pull_parser	lxml.tests.test_classlookup.ClassLookupTestCase-class.html#test_default_class_lookup_pull_parser
 lxml.tests.test_classlookup.ClassLookupTestCase.test_attribute_based_lookup	lxml.tests.test_classlookup.ClassLookupTestCase-class.html#test_attribute_based_lookup
 lxml.tests.test_classlookup.ClassLookupTestCase.test_parser_based_lookup	lxml.tests.test_classlookup.ClassLookupTestCase-class.html#test_parser_based_lookup
 lxml.tests.common_imports.HelperTestCase._rootstring	lxml.tests.common_imports.HelperTestCase-class.html#_rootstring
@@ -4522,12 +4535,33 @@ lxml.tests.common_imports.HelperTestCase.parse	lxml.tests.common_imports.HelperT
 unittest.case.TestCase.failureException	exceptions.AssertionError-class.html
 lxml.tests.test_css.CSSTestCase.test_cssselect	lxml.tests.test_css.CSSTestCase-class.html#test_cssselect
 lxml.tests.common_imports.HelperTestCase.assertFalse	lxml.tests.common_imports.HelperTestCase-class.html#assertFalse
+lxml.tests.test_doctestcompare.DoctestCompareTest	lxml.tests.test_doctestcompare.DoctestCompareTest-class.html
+lxml.tests.test_doctestcompare.DoctestCompareTest.test_differing_tags	lxml.tests.test_doctestcompare.DoctestCompareTest-class.html#test_differing_tags
+lxml.tests.common_imports.HelperTestCase.tearDown	lxml.tests.common_imports.HelperTestCase-class.html#tearDown
+lxml.tests.test_doctestcompare.DoctestCompareTest.assert_diff	lxml.tests.test_doctestcompare.DoctestCompareTest-class.html#assert_diff
+lxml.tests.test_doctestcompare.DoctestCompareTest.test_differing_attributes	lxml.tests.test_doctestcompare.DoctestCompareTest-class.html#test_differing_attributes
+lxml.tests.test_doctestcompare.DoctestCompareTest._checker	lxml.tests.test_doctestcompare.DoctestCompareTest-class.html#_checker
+lxml.tests.test_doctestcompare.DoctestCompareTest.test_equal_input	lxml.tests.test_doctestcompare.DoctestCompareTest-class.html#test_equal_input
+lxml.tests.test_doctestcompare.DoctestCompareTest.test_tags_upper_lower_case	lxml.tests.test_doctestcompare.DoctestCompareTest-class.html#test_tags_upper_lower_case
+lxml.tests.test_doctestcompare.DoctestCompareTest.test_tags_upper_lower_case_html	lxml.tests.test_doctestcompare.DoctestCompareTest-class.html#test_tags_upper_lower_case_html
+lxml.tests.common_imports.HelperTestCase._rootstring	lxml.tests.common_imports.HelperTestCase-class.html#_rootstring
+lxml.tests.test_doctestcompare.DoctestCompareTest.assert_nodiff	lxml.tests.test_doctestcompare.DoctestCompareTest-class.html#assert_nodiff
+lxml.tests.test_doctestcompare.DoctestCompareTest.compare	lxml.tests.test_doctestcompare.DoctestCompareTest-class.html#compare
+lxml.tests.common_imports.HelperTestCase.parse	lxml.tests.common_imports.HelperTestCase-class.html#parse
+unittest.case.TestCase.failureException	exceptions.AssertionError-class.html
+lxml.tests.common_imports.HelperTestCase.assertFalse	lxml.tests.common_imports.HelperTestCase-class.html#assertFalse
+lxml.tests.test_doctestcompare.DummyInput	lxml.tests.test_doctestcompare.DummyInput-class.html
+lxml.tests.test_doctestcompare.DummyInput.__init__	lxml.tests.test_doctestcompare.DummyInput-class.html#__init__
 lxml.tests.test_dtd.ETreeDtdTestCase	lxml.tests.test_dtd.ETreeDtdTestCase-class.html
 lxml.tests.test_dtd.ETreeDtdTestCase.test_dtd_parse_invalid	lxml.tests.test_dtd.ETreeDtdTestCase-class.html#test_dtd_parse_invalid
+lxml.tests.test_dtd.ETreeDtdTestCase.test_internal_dtds	lxml.tests.test_dtd.ETreeDtdTestCase-class.html#test_internal_dtds
 lxml.tests.test_dtd.ETreeDtdTestCase.test_iterparse_file_dtd_start	lxml.tests.test_dtd.ETreeDtdTestCase-class.html#test_iterparse_file_dtd_start
 lxml.tests.test_dtd.ETreeDtdTestCase.test_dtd_file	lxml.tests.test_dtd.ETreeDtdTestCase-class.html#test_dtd_file
+lxml.tests.test_dtd.ETreeDtdTestCase.test_dtd_api_internal	lxml.tests.test_dtd.ETreeDtdTestCase-class.html#test_dtd_api_internal
 lxml.tests.common_imports.HelperTestCase.tearDown	lxml.tests.common_imports.HelperTestCase-class.html#tearDown
 lxml.tests.test_dtd.ETreeDtdTestCase.test_parse_file_dtd	lxml.tests.test_dtd.ETreeDtdTestCase-class.html#test_parse_file_dtd
+lxml.tests.test_dtd.ETreeDtdTestCase.test_dtd_invalid_duplicate_id	lxml.tests.test_dtd.ETreeDtdTestCase-class.html#test_dtd_invalid_duplicate_id
+lxml.tests.test_dtd.ETreeDtdTestCase.test_dtd_parse_valid_file_url	lxml.tests.test_dtd.ETreeDtdTestCase-class.html#test_dtd_parse_valid_file_url
 lxml.tests.test_dtd.ETreeDtdTestCase.test_iterparse_file_dtd_end	lxml.tests.test_dtd.ETreeDtdTestCase-class.html#test_iterparse_file_dtd_end
 lxml.tests.test_dtd.ETreeDtdTestCase.test_dtd_stringio	lxml.tests.test_dtd.ETreeDtdTestCase-class.html#test_dtd_stringio
 lxml.tests.test_dtd.ETreeDtdTestCase.test_dtd_assertValid	lxml.tests.test_dtd.ETreeDtdTestCase-class.html#test_dtd_assertValid
@@ -4544,6 +4578,7 @@ lxml.tests.test_dtd.ETreeDtdTestCase.test_dtd_parse_valid_relative	lxml.tests.te
 lxml.tests.test_dtd.ETreeDtdTestCase.test_dtd_internal	lxml.tests.test_dtd.ETreeDtdTestCase-class.html#test_dtd_internal
 lxml.tests.common_imports.HelperTestCase.assertFalse	lxml.tests.common_imports.HelperTestCase-class.html#assertFalse
 lxml.tests.test_dtd.ETreeDtdTestCase.test_dtd_invalid	lxml.tests.test_dtd.ETreeDtdTestCase-class.html#test_dtd_invalid
+lxml.tests.test_dtd.ETreeDtdTestCase.test_dtd_parse_valid_relative_file_url	lxml.tests.test_dtd.ETreeDtdTestCase-class.html#test_dtd_parse_valid_relative_file_url
 lxml.tests.test_elementtree.CElementTreeTestCase	lxml.tests.test_elementtree.CElementTreeTestCase-class.html
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_attribute_update_iter	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attribute_update_iter
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_getiterator_filter_pi	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_getiterator_filter_pi
@@ -4612,6 +4647,7 @@ lxml.tests.test_elementtree._ETreeTestCaseBase.test_qname_attrib	lxml.tests.test
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_subelement	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_subelement
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_insert	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_insert
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_iterparse_large	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_iterparse_large
+lxml.tests.test_elementtree._ETreeTestCaseBase.test_attribute_items	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attribute_items
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_delslice	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_delslice
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_feed_parser_error_position	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_feed_parser_error_position
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_deepcopy_comment	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_deepcopy_comment
@@ -4713,7 +4749,7 @@ lxml.tests.test_elementtree._ETreeTestCaseBase.test_ns_move	lxml.tests.test_elem
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_XML	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_XML
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_deepcopy_elementtree	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_deepcopy_elementtree
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_attribute_contains	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attribute_contains
-lxml.tests.test_elementtree._ETreeTestCaseBase.test_setslice_negative	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_setslice_negative
+lxml.tests.test_elementtree._ETreeTestCaseBase.test_getiterator_filter_all	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_getiterator_filter_all
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_tail_set_none	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_tail_set_none
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_parse_file_object_encoding	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_parse_file_object_encoding
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_clear_sub	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_clear_sub
@@ -4746,7 +4782,7 @@ lxml.tests.test_elementtree._ETreeTestCaseBase.test_iterparse_move_elements	lxml
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_attrib_ns_clear	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attrib_ns_clear
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_elementtree_getiterator	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_elementtree_getiterator
 lxml.tests.common_imports.HelperTestCase.parse	lxml.tests.common_imports.HelperTestCase-class.html#parse
-lxml.tests.test_elementtree._ETreeTestCaseBase.test_attribute_items	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attribute_items
+lxml.tests.test_elementtree._ETreeTestCaseBase.test_attrib_as_attrib	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attrib_as_attrib
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_delslice_negative1	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_delslice_negative1
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_delslice_negative2	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_delslice_negative2
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_ns_decl_tostring_root	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_ns_decl_tostring_root
@@ -4806,7 +4842,7 @@ lxml.tests.test_elementtree._ETreeTestCaseBase.test_getslice_text	lxml.tests.tes
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_encoding_tostring_sub_tail	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_encoding_tostring_sub_tail
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_getiterator_filter	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_getiterator_filter
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_qname_cmp	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_qname_cmp
-lxml.tests.test_elementtree._ETreeTestCaseBase.test_getiterator_filter_all	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_getiterator_filter_all
+lxml.tests.test_elementtree._ETreeTestCaseBase.test_setslice_negative	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_setslice_negative
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_multiple_elementrees	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_multiple_elementrees
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_comment_nonsense	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_comment_nonsense
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_iteration_del_child	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_iteration_del_child
@@ -4907,6 +4943,7 @@ lxml.tests.test_elementtree._ETreeTestCaseBase.test_qname_attrib	lxml.tests.test
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_subelement	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_subelement
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_insert	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_insert
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_iterparse_large	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_iterparse_large
+lxml.tests.test_elementtree._ETreeTestCaseBase.test_attribute_items	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attribute_items
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_delslice	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_delslice
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_feed_parser_error_position	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_feed_parser_error_position
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_deepcopy_comment	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_deepcopy_comment
@@ -5008,7 +5045,7 @@ lxml.tests.test_elementtree._ETreeTestCaseBase.test_ns_move	lxml.tests.test_elem
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_XML	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_XML
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_deepcopy_elementtree	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_deepcopy_elementtree
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_attribute_contains	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attribute_contains
-lxml.tests.test_elementtree._ETreeTestCaseBase.test_setslice_negative	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_setslice_negative
+lxml.tests.test_elementtree._ETreeTestCaseBase.test_getiterator_filter_all	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_getiterator_filter_all
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_tail_set_none	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_tail_set_none
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_parse_file_object_encoding	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_parse_file_object_encoding
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_clear_sub	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_clear_sub
@@ -5041,7 +5078,7 @@ lxml.tests.test_elementtree._ETreeTestCaseBase.test_iterparse_move_elements	lxml
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_attrib_ns_clear	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attrib_ns_clear
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_elementtree_getiterator	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_elementtree_getiterator
 lxml.tests.common_imports.HelperTestCase.parse	lxml.tests.common_imports.HelperTestCase-class.html#parse
-lxml.tests.test_elementtree._ETreeTestCaseBase.test_attribute_items	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attribute_items
+lxml.tests.test_elementtree._ETreeTestCaseBase.test_attrib_as_attrib	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attrib_as_attrib
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_delslice_negative1	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_delslice_negative1
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_delslice_negative2	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_delslice_negative2
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_ns_decl_tostring_root	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_ns_decl_tostring_root
@@ -5101,7 +5138,7 @@ lxml.tests.test_elementtree._ETreeTestCaseBase.test_getslice_text	lxml.tests.tes
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_encoding_tostring_sub_tail	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_encoding_tostring_sub_tail
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_getiterator_filter	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_getiterator_filter
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_qname_cmp	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_qname_cmp
-lxml.tests.test_elementtree._ETreeTestCaseBase.test_getiterator_filter_all	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_getiterator_filter_all
+lxml.tests.test_elementtree._ETreeTestCaseBase.test_setslice_negative	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_setslice_negative
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_multiple_elementrees	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_multiple_elementrees
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_comment_nonsense	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_comment_nonsense
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_iteration_del_child	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_iteration_del_child
@@ -5190,6 +5227,7 @@ lxml.tests.test_elementtree._ETreeTestCaseBase.test_qname_attrib	lxml.tests.test
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_subelement	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_subelement
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_insert	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_insert
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_iterparse_large	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_iterparse_large
+lxml.tests.test_elementtree._ETreeTestCaseBase.test_attribute_items	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attribute_items
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_delslice	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_delslice
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_feed_parser_error_position	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_feed_parser_error_position
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_deepcopy_comment	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_deepcopy_comment
@@ -5291,7 +5329,7 @@ lxml.tests.test_elementtree._ETreeTestCaseBase.test_ns_move	lxml.tests.test_elem
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_XML	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_XML
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_deepcopy_elementtree	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_deepcopy_elementtree
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_attribute_contains	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attribute_contains
-lxml.tests.test_elementtree._ETreeTestCaseBase.test_setslice_negative	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_setslice_negative
+lxml.tests.test_elementtree._ETreeTestCaseBase.test_getiterator_filter_all	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_getiterator_filter_all
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_tail_set_none	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_tail_set_none
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_parse_file_object_encoding	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_parse_file_object_encoding
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_clear_sub	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_clear_sub
@@ -5324,7 +5362,7 @@ lxml.tests.test_elementtree._ETreeTestCaseBase.test_iterparse_move_elements	lxml
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_attrib_ns_clear	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attrib_ns_clear
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_elementtree_getiterator	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_elementtree_getiterator
 lxml.tests.common_imports.HelperTestCase.parse	lxml.tests.common_imports.HelperTestCase-class.html#parse
-lxml.tests.test_elementtree._ETreeTestCaseBase.test_attribute_items	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attribute_items
+lxml.tests.test_elementtree._ETreeTestCaseBase.test_attrib_as_attrib	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attrib_as_attrib
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_delslice_negative1	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_delslice_negative1
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_delslice_negative2	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_delslice_negative2
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_ns_decl_tostring_root	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_ns_decl_tostring_root
@@ -5384,7 +5422,7 @@ lxml.tests.test_elementtree._ETreeTestCaseBase.test_getslice_text	lxml.tests.tes
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_encoding_tostring_sub_tail	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_encoding_tostring_sub_tail
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_getiterator_filter	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_getiterator_filter
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_qname_cmp	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_qname_cmp
-lxml.tests.test_elementtree._ETreeTestCaseBase.test_getiterator_filter_all	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_getiterator_filter_all
+lxml.tests.test_elementtree._ETreeTestCaseBase.test_setslice_negative	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_setslice_negative
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_multiple_elementrees	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_multiple_elementrees
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_comment_nonsense	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_comment_nonsense
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_iteration_del_child	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_iteration_del_child
@@ -5472,6 +5510,7 @@ lxml.tests.test_elementtree._ETreeTestCaseBase.test_qname_attrib	lxml.tests.test
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_subelement	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_subelement
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_insert	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_insert
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_iterparse_large	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_iterparse_large
+lxml.tests.test_elementtree._ETreeTestCaseBase.test_attribute_items	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attribute_items
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_delslice	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_delslice
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_feed_parser_error_position	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_feed_parser_error_position
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_deepcopy_comment	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_deepcopy_comment
@@ -5573,7 +5612,7 @@ lxml.tests.test_elementtree._ETreeTestCaseBase.test_ns_move	lxml.tests.test_elem
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_XML	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_XML
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_deepcopy_elementtree	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_deepcopy_elementtree
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_attribute_contains	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attribute_contains
-lxml.tests.test_elementtree._ETreeTestCaseBase.test_getiterator_filter_all	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_getiterator_filter_all
+lxml.tests.test_elementtree._ETreeTestCaseBase.test_setslice_negative	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_setslice_negative
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_tail_set_none	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_tail_set_none
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_parse_file_object_encoding	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_parse_file_object_encoding
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_clear_sub	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_clear_sub
@@ -5606,7 +5645,7 @@ lxml.tests.test_elementtree._ETreeTestCaseBase.test_iterparse_move_elements	lxml
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_attrib_ns_clear	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attrib_ns_clear
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_elementtree_getiterator	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_elementtree_getiterator
 lxml.tests.common_imports.HelperTestCase.parse	lxml.tests.common_imports.HelperTestCase-class.html#parse
-lxml.tests.test_elementtree._ETreeTestCaseBase.test_attribute_items	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attribute_items
+lxml.tests.test_elementtree._ETreeTestCaseBase.test_attrib_as_attrib	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_attrib_as_attrib
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_delslice_negative1	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_delslice_negative1
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_delslice_negative2	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_delslice_negative2
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_ns_decl_tostring_root	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_ns_decl_tostring_root
@@ -5666,7 +5705,7 @@ lxml.tests.test_elementtree._ETreeTestCaseBase.test_getslice_text	lxml.tests.tes
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_encoding_tostring_sub_tail	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_encoding_tostring_sub_tail
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_getiterator_filter	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_getiterator_filter
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_qname_cmp	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_qname_cmp
-lxml.tests.test_elementtree._ETreeTestCaseBase.test_setslice_negative	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_setslice_negative
+lxml.tests.test_elementtree._ETreeTestCaseBase.test_getiterator_filter_all	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_getiterator_filter_all
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_multiple_elementrees	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_multiple_elementrees
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_comment_nonsense	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_comment_nonsense
 lxml.tests.test_elementtree._ETreeTestCaseBase.test_iteration_del_child	lxml.tests.test_elementtree._ETreeTestCaseBase-class.html#test_iteration_del_child
@@ -5759,6 +5798,7 @@ lxml.tests.test_etree.ETreeOnlyTestCase.test_iterwalk_start_end	lxml.tests.test_
 lxml.tests.test_etree.ETreeOnlyTestCase.test_parseid	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_parseid
 lxml.tests.test_etree.ETreeOnlyTestCase.test_parse_fileobject_unicode	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_parse_fileobject_unicode
 lxml.tests.test_etree.ETreeOnlyTestCase.test_addprevious	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_addprevious
+lxml.tests.test_etree.ETreeOnlyTestCase.test_findall_ns	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_findall_ns
 lxml.tests.test_etree.ETreeOnlyTestCase.test_pi_pseudo_attributes_get	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_pi_pseudo_attributes_get
 lxml.tests.test_etree.ETreeOnlyTestCase.test_html_base_tag	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_html_base_tag
 lxml.tests.test_etree.ETreeOnlyTestCase.test_xml_base_attribute	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_xml_base_attribute
@@ -5785,6 +5825,7 @@ lxml.tests.test_etree.ETreeOnlyTestCase.test_entity_error	lxml.tests.test_etree.
 lxml.tests.test_etree.ETreeOnlyTestCase.test_sourceline_iterparse_start	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_sourceline_iterparse_start
 lxml.tests.test_etree.ETreeOnlyTestCase.test_iterwalk_getiterator	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_iterwalk_getiterator
 lxml.tests.test_etree.ETreeOnlyTestCase.test_itersiblings_tag_multiple	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_itersiblings_tag_multiple
+lxml.tests.test_etree.ETreeOnlyTestCase.test_comment_immutable_attrib	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_comment_immutable_attrib
 lxml.tests.test_etree.ETreeOnlyTestCase.test_tostring_unicode_pretty	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_tostring_unicode_pretty
 lxml.tests.test_etree.ETreeOnlyTestCase.test_iterdescendants_tag_multiple	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_iterdescendants_tag_multiple
 unittest.case.TestCase.failureException	exceptions.AssertionError-class.html
@@ -5799,7 +5840,7 @@ lxml.tests.test_etree.ETreeOnlyTestCase.test_attribute_has_key	lxml.tests.test_e
 lxml.tests.test_etree.ETreeOnlyTestCase.test_iterparse_tag_ns_empty	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_iterparse_tag_ns_empty
 lxml.tests.test_etree.ETreeOnlyTestCase.test_strip_elements	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_strip_elements
 lxml.tests.test_etree.ETreeOnlyTestCase.test_qname_namespace_localname	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_qname_namespace_localname
-lxml.tests.test_etree.ETreeOnlyTestCase.test_findall_ns	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_findall_ns
+lxml.tests.test_etree.ETreeOnlyTestCase.test_tostring_method_html_with_tail	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_tostring_method_html_with_tail
 lxml.tests.test_etree.ETreeOnlyTestCase.test_comment_immutable	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_comment_immutable
 lxml.tests.test_etree.ETreeOnlyTestCase.test_attribute_set_invalid	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_attribute_set_invalid
 lxml.tests.test_etree.ETreeOnlyTestCase.test_subelement_nsmap	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_subelement_nsmap
@@ -5809,7 +5850,7 @@ lxml.tests.test_etree.ETreeOnlyTestCase.test_XML_set_base_url_docinfo	lxml.tests
 lxml.tests.test_etree.ETreeOnlyTestCase.test_setitem_assert	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_setitem_assert
 lxml.tests.test_etree.ETreeOnlyTestCase.test_setslice_step_overrun	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_setslice_step_overrun
 lxml.tests.test_etree.ETreeOnlyTestCase.test_addprevious_noops	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_addprevious_noops
-lxml.tests.test_etree.ETreeOnlyTestCase.test_itersiblings	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_itersiblings
+lxml.tests.test_etree.ETreeOnlyTestCase.test_parser_encoding_unknown	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_parser_encoding_unknown
 lxml.tests.test_etree.ETreeOnlyTestCase.test_parse_base_url_docinfo	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_parse_base_url_docinfo
 lxml.tests.test_etree.ETreeOnlyTestCase.test_replace_new	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_replace_new
 lxml.tests.test_etree.ETreeOnlyTestCase.test_resolve_error	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_resolve_error
@@ -5857,7 +5898,7 @@ lxml.tests.test_etree.ETreeOnlyTestCase.test_namespaces_default_and_attr	lxml.te
 lxml.tests.test_etree.ETreeOnlyTestCase.test_iterparse_tag_ns	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_iterparse_tag_ns
 lxml.tests.test_etree.ETreeOnlyTestCase.test_element_name_colon	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_element_name_colon
 lxml.tests.test_etree.ETreeOnlyTestCase.test_namespaces_copy_element	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_namespaces_copy_element
-lxml.tests.test_etree.ETreeOnlyTestCase.test_parser_encoding_unknown	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_parser_encoding_unknown
+lxml.tests.test_etree.ETreeOnlyTestCase.test_itersiblings	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_itersiblings
 lxml.tests.test_etree.ETreeOnlyTestCase.test_namespaces_default_copy_element	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_namespaces_default_copy_element
 lxml.tests.test_etree.ETreeOnlyTestCase.test_strip_tags_ns	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_strip_tags_ns
 lxml.tests.test_etree.ETreeOnlyTestCase.test_element_name_empty	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_element_name_empty
@@ -5904,6 +5945,7 @@ lxml.tests.test_etree.ETreeOnlyTestCase.test_parser_target_cdata	lxml.tests.test
 lxml.tests.test_etree.ETreeOnlyTestCase.test_c_api	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_c_api
 lxml.tests.test_etree.ETreeOnlyTestCase.test_strip_tags	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_strip_tags
 lxml.tests.test_etree.ETreeOnlyTestCase.test_getnext	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_getnext
+lxml.tests.test_etree.ETreeOnlyTestCase.test_attrib_and_keywords	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_attrib_and_keywords
 lxml.tests.test_etree.ETreeOnlyTestCase.test_subelement_name_empty	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_subelement_name_empty
 lxml.tests.test_etree.ETreeOnlyTestCase.test_parser_encoding	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_parser_encoding
 lxml.tests.test_etree.ETreeOnlyTestCase.test_namespaces_default	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_namespaces_default
@@ -5918,6 +5960,7 @@ lxml.tests.test_etree.ETreeOnlyTestCase.test_sourceline_XML	lxml.tests.test_etre
 lxml.tests.test_etree.ETreeOnlyTestCase.test_unicode_byte_invalid	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_unicode_byte_invalid
 lxml.tests.test_etree.ETreeOnlyTestCase.test_iterwalk	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_iterwalk
 lxml.tests.test_etree.ETreeOnlyTestCase.test_iterdescendants_tag	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_iterdescendants_tag
+lxml.tests.test_etree.ETreeOnlyTestCase.test_setslice_step_negative	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_setslice_step_negative
 lxml.tests.test_etree.ETreeOnlyTestCase.test_comment_parse_empty	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_comment_parse_empty
 lxml.tests.test_etree.ETreeOnlyTestCase.test_cdata_parser	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_cdata_parser
 lxml.tests.common_imports.HelperTestCase.parse	lxml.tests.common_imports.HelperTestCase-class.html#parse
@@ -5947,7 +5990,7 @@ lxml.tests.test_etree.ETreeOnlyTestCase.test_element_name_quote	lxml.tests.test_
 lxml.tests.test_etree.ETreeOnlyTestCase.test_iterchildren_tag_multiple	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_iterchildren_tag_multiple
 lxml.tests.test_etree.ETreeOnlyTestCase.test_iterancestors_tag_multiple	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_iterancestors_tag_multiple
 lxml.tests.common_imports.HelperTestCase.assertFalse	lxml.tests.common_imports.HelperTestCase-class.html#assertFalse
-lxml.tests.test_etree.ETreeOnlyTestCase.test_setslice_step_negative	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_setslice_step_negative
+lxml.tests.test_etree.ETreeOnlyTestCase.test_attrib_order	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_attrib_order
 lxml.tests.test_etree.ETreeOnlyTestCase.test_deepcopy_pi	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_deepcopy_pi
 lxml.tests.test_etree.ETreeOnlyTestCase.test_strip_tags_doc_style	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_strip_tags_doc_style
 lxml.tests.test_etree.ETreeOnlyTestCase.test_findall_different_nsmaps	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_findall_different_nsmaps
@@ -5962,6 +6005,7 @@ lxml.tests.test_etree.ETreeOnlyTestCase.test_iterancestors	lxml.tests.test_etree
 lxml.tests.test_etree.ETreeOnlyTestCase.test_setslice_step	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_setslice_step
 lxml.tests.test_etree.ETreeOnlyTestCase.test_addprevious_root_comment	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_addprevious_root_comment
 lxml.tests.test_etree.ETreeOnlyTestCase.test_iterwalk_tag_all	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_iterwalk_tag_all
+lxml.tests.test_etree.ETreeOnlyTestCase.test_large_sourceline_XML	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_large_sourceline_XML
 lxml.tests.test_etree.ETreeOnlyTestCase.test_tostring_standalone_in_out	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_tostring_standalone_in_out
 lxml.tests.test_etree.ETreeOnlyTestCase.test_tounicode_element_tail	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_tounicode_element_tail
 lxml.tests.test_etree.ETreeOnlyTestCase.test_resolve_bytes_dtd	lxml.tests.test_etree.ETreeOnlyTestCase-class.html#test_resolve_bytes_dtd
@@ -6034,8 +6078,9 @@ lxml.tests.test_htmlparser.HtmlParserTestCase.test_module_parse_html	lxml.tests.
 lxml.tests.test_htmlparser.HtmlParserTestCase.test_html_parser_target_doctype_html_full	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_html_parser_target_doctype_html_full
 lxml.tests.test_htmlparser.HtmlParserTestCase.test_html_element_name_colon	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_html_element_name_colon
 lxml.tests.test_htmlparser.HtmlParserTestCase.test_html_subelement_name_quote	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_html_subelement_name_quote
-lxml.tests.test_htmlparser.HtmlParserTestCase.test_module_parse_html_error	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_module_parse_html_error
+lxml.tests.test_htmlparser.HtmlParserTestCase.test_html_feed_parser	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_html_feed_parser
 lxml.tests.test_htmlparser.HtmlParserTestCase.test_html_iterparse	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_html_iterparse
+lxml.tests.test_htmlparser.HtmlParserTestCase.test_html_feed_parser_more_tags	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_html_feed_parser_more_tags
 lxml.tests.test_htmlparser.HtmlParserTestCase.test_html_iterparse_start	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_html_iterparse_start
 lxml.tests.test_htmlparser.HtmlParserTestCase.tearDown	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#tearDown
 lxml.tests.test_htmlparser.HtmlParserTestCase.test_html_subelement_name_colon	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_html_subelement_name_colon
@@ -6045,6 +6090,7 @@ lxml.tests.test_htmlparser.HtmlParserTestCase.test_module_HTML_unicode	lxml.test
 lxml.tests.test_htmlparser.HtmlParserTestCase.test_parse_encoding_8bit_override	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_parse_encoding_8bit_override
 lxml.tests.test_htmlparser.HtmlParserTestCase.test_parse_encoding_8bit_explicit	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_parse_encoding_8bit_explicit
 lxml.tests.test_htmlparser.HtmlParserTestCase.test_module_HTML	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_module_HTML
+lxml.tests.test_htmlparser.HtmlParserTestCase.test_module_parse_html_error	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_module_parse_html_error
 lxml.tests.test_htmlparser.HtmlParserTestCase.test_module_HTML_cdata	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_module_HTML_cdata
 lxml.tests.test_htmlparser.HtmlParserTestCase.test_html_parser_target_tag	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_html_parser_target_tag
 lxml.tests.common_imports.HelperTestCase._rootstring	lxml.tests.common_imports.HelperTestCase-class.html#_rootstring
@@ -6058,11 +6104,13 @@ lxml.tests.test_htmlparser.HtmlParserTestCase.test_module_parse_html_filelike	lx
 lxml.tests.test_htmlparser.HtmlParserTestCase.test_html_subelement_name_empty	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_html_subelement_name_empty
 lxml.tests.test_htmlparser.HtmlParserTestCase.test_html_parser_target_doctype_html	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_html_parser_target_doctype_html
 lxml.tests.test_htmlparser.HtmlParserTestCase.test_default_parser_HTML_broken	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_default_parser_HTML_broken
+lxml.tests.test_htmlparser.HtmlParserTestCase.test_wide_unicode_xml	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_wide_unicode_xml
 lxml.tests.test_htmlparser.HtmlParserTestCase.test_html_file_error	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_html_file_error
 lxml.tests.test_htmlparser.HtmlParserTestCase.test_html_iterparse_broken_no_recover	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_html_iterparse_broken_no_recover
 lxml.tests.test_htmlparser.HtmlParserTestCase.html_str	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#html_str
 lxml.tests.test_htmlparser.HtmlParserTestCase.test_html_iterparse_stop_short	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_html_iterparse_stop_short
 lxml.tests.test_htmlparser.HtmlParserTestCase.test_html_iterparse_file	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_html_iterparse_file
+lxml.tests.test_htmlparser.HtmlParserTestCase.test_html_feed_parser_chunky	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_html_feed_parser_chunky
 lxml.tests.common_imports.HelperTestCase.assertFalse	lxml.tests.common_imports.HelperTestCase-class.html#assertFalse
 lxml.tests.test_htmlparser.HtmlParserTestCase.test_html_element_name_space	lxml.tests.test_htmlparser.HtmlParserTestCase-class.html#test_html_element_name_space
 lxml.tests.test_http_io.HttpIOTestCase	lxml.tests.test_http_io.HttpIOTestCase-class.html
@@ -6090,6 +6138,7 @@ lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_element_nested_wit
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_encoding	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_encoding
 lxml.tests.test_incremental_xmlfile.BytesIOXmlFileTestCase.setUp	lxml.tests.test_incremental_xmlfile.BytesIOXmlFileTestCase-class.html#setUp
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_element_write_text	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_element_write_text
+lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_closing_out_of_order_in_error_case	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_closing_out_of_order_in_error_case
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase._read_file	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#_read_file
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_attribute	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_attribute
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_failure_trailing_Element	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_failure_trailing_Element
@@ -6121,6 +6170,7 @@ lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_element_nested_wit
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_encoding	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_encoding
 lxml.tests.test_incremental_xmlfile.SimpleFileLikeXmlFileTestCase.setUp	lxml.tests.test_incremental_xmlfile.SimpleFileLikeXmlFileTestCase-class.html#setUp
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_element_write_text	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_element_write_text
+lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_closing_out_of_order_in_error_case	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_closing_out_of_order_in_error_case
 lxml.tests.test_incremental_xmlfile.SimpleFileLikeXmlFileTestCase._read_file	lxml.tests.test_incremental_xmlfile.SimpleFileLikeXmlFileTestCase-class.html#_read_file
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_attribute	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_attribute
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_failure_trailing_Element	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_failure_trailing_Element
@@ -6155,6 +6205,7 @@ lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_element_nested_wit
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_encoding	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_encoding
 lxml.tests.test_incremental_xmlfile.TempXmlFileTestCase.setUp	lxml.tests.test_incremental_xmlfile.TempXmlFileTestCase-class.html#setUp
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_element_write_text	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_element_write_text
+lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_closing_out_of_order_in_error_case	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_closing_out_of_order_in_error_case
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase._read_file	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#_read_file
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_attribute	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_attribute
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_failure_trailing_Element	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_failure_trailing_Element
@@ -6185,6 +6236,7 @@ lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_write_Element_repe
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_element_nested_with_text	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_element_nested_with_text
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_encoding	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_encoding
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_element_write_text	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_element_write_text
+lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_closing_out_of_order_in_error_case	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_closing_out_of_order_in_error_case
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase._read_file	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#_read_file
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_attribute	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_attribute
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_failure_trailing_Element	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_failure_trailing_Element
@@ -6205,8 +6257,10 @@ lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_element	lxml.tests
 lxml.tests.common_imports.HelperTestCase.assertFalse	lxml.tests.common_imports.HelperTestCase-class.html#assertFalse
 lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase.test_pi	lxml.tests.test_incremental_xmlfile._XmlFileTestCaseBase-class.html#test_pi
 lxml.tests.test_io.ETreeIOTestCase	lxml.tests.test_io.ETreeIOTestCase-class.html
+lxml.tests.test_io._IOTestCaseBase.test_iterparse_utf8_bom	lxml.tests.test_io._IOTestCaseBase-class.html#test_iterparse_utf8_bom
 lxml.tests.test_io._IOTestCaseBase.test_class_parse_fileobject	lxml.tests.test_io._IOTestCaseBase-class.html#test_class_parse_fileobject
 lxml.tests.test_io._IOTestCaseBase.test_module_parse_gzipobject	lxml.tests.test_io._IOTestCaseBase-class.html#test_module_parse_gzipobject
+lxml.tests.test_io._IOTestCaseBase.test_iterparse_utf16_bom	lxml.tests.test_io._IOTestCaseBase-class.html#test_iterparse_utf16_bom
 lxml.tests.test_io.ETreeIOTestCase.test_write_compressed_text	lxml.tests.test_io.ETreeIOTestCase-class.html#test_write_compressed_text
 lxml.tests.test_io.ETreeIOTestCase.etree	lxml.etree-module.html
 lxml.tests.test_io._IOTestCaseBase.test_class_parse_filename	lxml.tests.test_io._IOTestCaseBase-class.html#test_class_parse_filename
@@ -6218,6 +6272,7 @@ lxml.tests.test_io._IOTestCaseBase.test_write_filename	lxml.tests.test_io._IOTes
 lxml.tests.test_io._IOTestCaseBase.test_tree_io_latin1	lxml.tests.test_io._IOTestCaseBase-class.html#test_tree_io_latin1
 lxml.tests.test_io._IOTestCaseBase.setUp	lxml.tests.test_io._IOTestCaseBase-class.html#setUp
 lxml.tests.test_io._IOTestCaseBase.test_class_parse_unamed_fileobject	lxml.tests.test_io._IOTestCaseBase-class.html#test_class_parse_unamed_fileobject
+lxml.tests.test_io._IOTestCaseBase.test_parse_utf8_bom	lxml.tests.test_io._IOTestCaseBase-class.html#test_parse_utf8_bom
 lxml.tests.test_io._IOTestCaseBase.test_etree_parse_io_error	lxml.tests.test_io._IOTestCaseBase-class.html#test_etree_parse_io_error
 lxml.tests.test_io._IOTestCaseBase.test_module_parse_fileobject_error	lxml.tests.test_io._IOTestCaseBase-class.html#test_module_parse_fileobject_error
 lxml.tests.test_io._IOTestCaseBase.test_module_parse_large_fileobject	lxml.tests.test_io._IOTestCaseBase-class.html#test_module_parse_large_fileobject
@@ -6230,8 +6285,10 @@ lxml.tests.test_io._IOTestCaseBase.test_tree_io	lxml.tests.test_io._IOTestCaseBa
 lxml.tests.test_io._IOTestCaseBase.test_module_parse_fileobject_late_error	lxml.tests.test_io._IOTestCaseBase-class.html#test_module_parse_fileobject_late_error
 lxml.tests.common_imports.HelperTestCase.assertFalse	lxml.tests.common_imports.HelperTestCase-class.html#assertFalse
 lxml.tests.test_io.ElementTreeIOTestCase	lxml.tests.test_io.ElementTreeIOTestCase-class.html
+lxml.tests.test_io._IOTestCaseBase.test_iterparse_utf8_bom	lxml.tests.test_io._IOTestCaseBase-class.html#test_iterparse_utf8_bom
 lxml.tests.test_io._IOTestCaseBase.test_class_parse_fileobject	lxml.tests.test_io._IOTestCaseBase-class.html#test_class_parse_fileobject
 lxml.tests.test_io._IOTestCaseBase.test_module_parse_gzipobject	lxml.tests.test_io._IOTestCaseBase-class.html#test_module_parse_gzipobject
+lxml.tests.test_io._IOTestCaseBase.test_iterparse_utf16_bom	lxml.tests.test_io._IOTestCaseBase-class.html#test_iterparse_utf16_bom
 lxml.tests.test_io.ElementTreeIOTestCase.etree	xml.etree.ElementTree-module.html
 lxml.tests.test_io._IOTestCaseBase.test_class_parse_filename	lxml.tests.test_io._IOTestCaseBase-class.html#test_class_parse_filename
 lxml.tests.test_io._IOTestCaseBase.test_write_invalid_filename	lxml.tests.test_io._IOTestCaseBase-class.html#test_write_invalid_filename
@@ -6242,6 +6299,7 @@ lxml.tests.test_io._IOTestCaseBase.test_write_filename	lxml.tests.test_io._IOTes
 lxml.tests.test_io._IOTestCaseBase.test_tree_io_latin1	lxml.tests.test_io._IOTestCaseBase-class.html#test_tree_io_latin1
 lxml.tests.test_io._IOTestCaseBase.setUp	lxml.tests.test_io._IOTestCaseBase-class.html#setUp
 lxml.tests.test_io._IOTestCaseBase.test_class_parse_unamed_fileobject	lxml.tests.test_io._IOTestCaseBase-class.html#test_class_parse_unamed_fileobject
+lxml.tests.test_io._IOTestCaseBase.test_parse_utf8_bom	lxml.tests.test_io._IOTestCaseBase-class.html#test_parse_utf8_bom
 lxml.tests.test_io._IOTestCaseBase.test_etree_parse_io_error	lxml.tests.test_io._IOTestCaseBase-class.html#test_etree_parse_io_error
 lxml.tests.test_io._IOTestCaseBase.test_module_parse_fileobject_error	lxml.tests.test_io._IOTestCaseBase-class.html#test_module_parse_fileobject_error
 lxml.tests.test_io._IOTestCaseBase.test_module_parse_large_fileobject	lxml.tests.test_io._IOTestCaseBase-class.html#test_module_parse_large_fileobject
@@ -6254,8 +6312,10 @@ lxml.tests.test_io._IOTestCaseBase.test_tree_io	lxml.tests.test_io._IOTestCaseBa
 lxml.tests.test_io._IOTestCaseBase.test_module_parse_fileobject_late_error	lxml.tests.test_io._IOTestCaseBase-class.html#test_module_parse_fileobject_late_error
 lxml.tests.common_imports.HelperTestCase.assertFalse	lxml.tests.common_imports.HelperTestCase-class.html#assertFalse
 lxml.tests.test_io._IOTestCaseBase	lxml.tests.test_io._IOTestCaseBase-class.html
+lxml.tests.test_io._IOTestCaseBase.test_iterparse_utf8_bom	lxml.tests.test_io._IOTestCaseBase-class.html#test_iterparse_utf8_bom
 lxml.tests.test_io._IOTestCaseBase.test_class_parse_fileobject	lxml.tests.test_io._IOTestCaseBase-class.html#test_class_parse_fileobject
 lxml.tests.test_io._IOTestCaseBase.test_module_parse_gzipobject	lxml.tests.test_io._IOTestCaseBase-class.html#test_module_parse_gzipobject
+lxml.tests.test_io._IOTestCaseBase.test_iterparse_utf16_bom	lxml.tests.test_io._IOTestCaseBase-class.html#test_iterparse_utf16_bom
 lxml.tests.test_io._IOTestCaseBase.etree	lxml.tests.test_io._IOTestCaseBase-class.html#etree
 lxml.tests.test_io._IOTestCaseBase.test_class_parse_filename	lxml.tests.test_io._IOTestCaseBase-class.html#test_class_parse_filename
 lxml.tests.test_io._IOTestCaseBase.test_write_invalid_filename	lxml.tests.test_io._IOTestCaseBase-class.html#test_write_invalid_filename
@@ -6266,6 +6326,7 @@ lxml.tests.test_io._IOTestCaseBase.test_write_filename	lxml.tests.test_io._IOTes
 lxml.tests.test_io._IOTestCaseBase.test_tree_io_latin1	lxml.tests.test_io._IOTestCaseBase-class.html#test_tree_io_latin1
 lxml.tests.test_io._IOTestCaseBase.setUp	lxml.tests.test_io._IOTestCaseBase-class.html#setUp
 lxml.tests.test_io._IOTestCaseBase.test_class_parse_unamed_fileobject	lxml.tests.test_io._IOTestCaseBase-class.html#test_class_parse_unamed_fileobject
+lxml.tests.test_io._IOTestCaseBase.test_parse_utf8_bom	lxml.tests.test_io._IOTestCaseBase-class.html#test_parse_utf8_bom
 lxml.tests.test_io._IOTestCaseBase.test_etree_parse_io_error	lxml.tests.test_io._IOTestCaseBase-class.html#test_etree_parse_io_error
 lxml.tests.test_io._IOTestCaseBase.test_module_parse_fileobject_error	lxml.tests.test_io._IOTestCaseBase-class.html#test_module_parse_fileobject_error
 lxml.tests.test_io._IOTestCaseBase.test_module_parse_large_fileobject	lxml.tests.test_io._IOTestCaseBase-class.html#test_module_parse_large_fileobject
@@ -6853,6 +6914,7 @@ lxml.tests.test_unicode.UnicodeTestCase.test_unicode_xml	lxml.tests.test_unicode
 lxml.tests.common_imports.HelperTestCase.parse	lxml.tests.common_imports.HelperTestCase-class.html#parse
 unittest.case.TestCase.failureException	exceptions.AssertionError-class.html
 lxml.tests.test_unicode.UnicodeTestCase.test_unicode_ns_invalid	lxml.tests.test_unicode.UnicodeTestCase-class.html#test_unicode_ns_invalid
+lxml.tests.test_unicode.UnicodeTestCase.test_wide_unicode_xml	lxml.tests.test_unicode.UnicodeTestCase-class.html#test_wide_unicode_xml
 lxml.tests.test_unicode.UnicodeTestCase.test_unicode_tag	lxml.tests.test_unicode.UnicodeTestCase-class.html#test_unicode_tag
 lxml.tests.test_unicode.UnicodeTestCase.test_unicode_parse_stringio	lxml.tests.test_unicode.UnicodeTestCase-class.html#test_unicode_parse_stringio
 lxml.tests.test_unicode.UnicodeTestCase.test_unicode_tag_invalid	lxml.tests.test_unicode.UnicodeTestCase-class.html#test_unicode_tag_invalid
@@ -6899,6 +6961,7 @@ lxml.tests.test_xmlschema.ETreeXMLSchemaTestCase.test_xmlschema_parse_default_at
 lxml.tests.test_xmlschema.ETreeXMLSchemaTestCase.test_xmlschema	lxml.tests.test_xmlschema.ETreeXMLSchemaTestCase-class.html#test_xmlschema
 lxml.tests.common_imports.HelperTestCase.parse	lxml.tests.common_imports.HelperTestCase-class.html#parse
 unittest.case.TestCase.failureException	exceptions.AssertionError-class.html
+lxml.tests.test_xmlschema.ETreeXMLSchemaTestCase.test_xmlschema_error_log	lxml.tests.test_xmlschema.ETreeXMLSchemaTestCase-class.html#test_xmlschema_error_log
 lxml.tests.test_xmlschema.ETreeXMLSchemaTestCase.test_xmlschema_iterparse	lxml.tests.test_xmlschema.ETreeXMLSchemaTestCase-class.html#test_xmlschema_iterparse
 lxml.tests.test_xmlschema.ETreeXMLSchemaTestCase.test_xmlschema_parse_fixed_attributes	lxml.tests.test_xmlschema.ETreeXMLSchemaTestCase-class.html#test_xmlschema_parse_fixed_attributes
 lxml.tests.common_imports.HelperTestCase.assertFalse	lxml.tests.common_imports.HelperTestCase-class.html#assertFalse

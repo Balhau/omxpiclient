@@ -86,7 +86,7 @@ def print_post():
 	file_path = request.form['file']
 	dir_path = request.form['path']
 	os.system('killall omxplayer.bin')
-	command='omxplayer '+sh_quote(dir_path)+sh_quote(file_path)+' -o local &'
+	command='omxplayer '+sh_quote(dir_path)+sh_quote(file_path)+' &'
 	if file_path and dir_path:
 		#print command
 		args=shlex.split(command)

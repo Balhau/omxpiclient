@@ -78,6 +78,13 @@
 #endif
 #endif
 
+#if PY_VERSION_HEX <= 0x03030000 && !(defined(CYTHON_PEP393_ENABLED) && CYTHON_PEP393_ENABLED)
+  #define PyUnicode_IS_READY(op)    (0)
+  #define PyUnicode_GET_LENGTH(u)   PyUnicode_GET_SIZE(u)
+  #define PyUnicode_KIND(u)         (sizeof(Py_UNICODE))
+  #define PyUnicode_DATA(u)         ((void*)PyUnicode_AS_UNICODE(u))
+#endif
+
 /* PySlice_GetIndicesEx() has wrong signature in Py<=3.1 */
 #if PY_VERSION_HEX >= 0x03020000
 #  define _lx_PySlice_GetIndicesEx(o, l, b, e, s, sl) PySlice_GetIndicesEx(o, l, b, e, s, sl)
@@ -168,6 +175,10 @@
 #  define xmlSchematronSetValidStructuredErrors(ctxt, errorfunc, data)
 #endif
 
+#if LIBXML_VERSION < 20900
+#  define XML_PARSE_BIG_LINES 4194304
+#endif
+
 #include "libxml/tree.h"
 #ifndef LIBXML2_NEW_BUFFER
    typedef xmlBuffer xmlBuf;
@@ -231,6 +242,7 @@ long _ftol2( double dblSource ) { return _ftol( dblSource ); }
 
 #define _getNs(c_node) \
         (((c_node)->ns == 0) ? 0 : ((c_node)->ns->href))
+
 
 /* Macro pair implementation of a depth first tree walker
  *

@@ -8,10 +8,12 @@ import unittest, sys, os.path
 
 this_dir = os.path.dirname(__file__)
 if this_dir not in sys.path:
-    sys.path.insert(0, this_dir) # needed for Py3
+    sys.path.insert(0, this_dir)  # needed for Py3
 
-from common_imports import etree, StringIO, BytesIO, _bytes, doctest
-from common_imports import HelperTestCase, fileInTestDir, make_doctest, skipIf
+from common_imports import etree, BytesIO, _bytes
+from common_imports import HelperTestCase, make_doctest, skipIf
+from common_imports import fileInTestDir, fileUrlInTestDir
+
 
 class ETreeDtdTestCase(HelperTestCase):
     def test_dtd(self):
@@ -33,13 +35,14 @@ class ETreeDtdTestCase(HelperTestCase):
     def test_dtd_parse_invalid(self):
         fromstring = etree.fromstring
         parser = etree.XMLParser(dtd_validation=True)
-        xml = _bytes('<!DOCTYPE b SYSTEM "%s"><b><a/></b>' % fileInTestDir("test.dtd"))
+        xml = _bytes('<!DOCTYPE b SYSTEM "%s"><b><a/></b>' %
+                     fileInTestDir("test.dtd"))
         self.assertRaises(etree.XMLSyntaxError,
                           fromstring, xml, parser=parser)
 
     def test_dtd_parse_file_not_found(self):
         fromstring = etree.fromstring
-        dtd_filename = fileInTestDir("__nosuch.dtd")
+        dtd_filename = fileUrlInTestDir("__nosuch.dtd")
         parser = etree.XMLParser(dtd_validation=True)
         xml = _bytes('<!DOCTYPE b SYSTEM "%s"><b><a/></b>' % dtd_filename)
         self.assertRaises(etree.XMLSyntaxError,
@@ -49,20 +52,35 @@ class ETreeDtdTestCase(HelperTestCase):
             fromstring(xml, parser=parser)
         except etree.XMLSyntaxError:
             e = sys.exc_info()[1]
-            errors = [ entry.message for entry in e.error_log
-                       if dtd_filename in entry.message ]
+            self.assertTrue(e.error_log)
+            self.assertTrue(parser.error_log)
+            errors = [entry.message for entry in e.error_log
+                      if dtd_filename in entry.message]
         self.assertTrue(errors)
 
     def test_dtd_parse_valid(self):
         parser = etree.XMLParser(dtd_validation=True)
-        xml = '<!DOCTYPE a SYSTEM "%s"><a><b/></a>' % fileInTestDir("test.dtd")
+        xml = ('<!DOCTYPE a SYSTEM "%s"><a><b/></a>' %
+               fileUrlInTestDir("test.dtd"))
+        root = etree.fromstring(xml, parser=parser)
+
+    def test_dtd_parse_valid_file_url(self):
+        parser = etree.XMLParser(dtd_validation=True)
+        xml = ('<!DOCTYPE a SYSTEM "%s"><a><b/></a>' %
+               fileUrlInTestDir("test.dtd"))
         root = etree.fromstring(xml, parser=parser)
 
     def test_dtd_parse_valid_relative(self):
         parser = etree.XMLParser(dtd_validation=True)
         xml = '<!DOCTYPE a SYSTEM "test.dtd"><a><b/></a>'
-        root = etree.fromstring(xml, parser=parser,
-                                base_url=fileInTestDir("test.xml"))
+        root = etree.fromstring(
+            xml, parser=parser, base_url=fileUrlInTestDir("test.xml"))
+
+    def test_dtd_parse_valid_relative_file_url(self):
+        parser = etree.XMLParser(dtd_validation=True)
+        xml = '<!DOCTYPE a SYSTEM "test.dtd"><a><b/></a>'
+        root = etree.fromstring(
+            xml, parser=parser, base_url=fileUrlInTestDir("test.xml"))
 
     def test_dtd_invalid(self):
         root = etree.XML("<b><a/></b>")
@@ -98,6 +116,100 @@ class ETreeDtdTestCase(HelperTestCase):
         dtd = etree.ElementTree(root).docinfo.internalDTD
         self.assertTrue(dtd)
         self.assertFalse(dtd.validate(root))
+
+    def test_dtd_invalid_duplicate_id(self):
+        root = etree.XML(_bytes('''
+        <a><b id="id1"/><b id="id2"/><b id="id1"/></a>
+        '''))
+        dtd = etree.DTD(BytesIO(_bytes("""
+        <!ELEMENT a (b*)>
+        <!ATTLIST b
+            id ID #REQUIRED
+        >
+        <!ELEMENT b EMPTY>
+        """)))
+        self.assertFalse(dtd.validate(root))
+        self.assertTrue(dtd.error_log)
+        self.assertTrue([error for error in dtd.error_log
+                         if 'id1' in error.message])
+
+    def test_dtd_api_internal(self):
+        root = etree.XML(_bytes('''
+        <!DOCTYPE b SYSTEM "none" [
+        <!ATTLIST a
+          attr1 (x | y | z) "z"
+          attr2 CDATA #FIXED "X"
+        >
+        <!ELEMENT b (a)>
+        <!ELEMENT a EMPTY>
+        ]>
+        <b><a/></b>
+        '''))
+        dtd = etree.ElementTree(root).docinfo.internalDTD
+        self.assertTrue(dtd)
+        dtd.assertValid(root)
+
+        seen = []
+        for el in dtd.iterelements():
+            if el.name == 'a':
+                self.assertEqual(2, len(el.attributes()))
+                for attr in el.iterattributes():
+                    if attr.name == 'attr1':
+                        self.assertEqual('enumeration', attr.type)
+                        self.assertEqual('none', attr.default)
+                        self.assertEqual('z', attr.default_value)
+                        values = attr.values()
+                        values.sort()
+                        self.assertEqual(['x', 'y', 'z'], values)
+                    else:
+                        self.assertEqual('attr2', attr.name)
+                        self.assertEqual('cdata', attr.type)
+                        self.assertEqual('fixed', attr.default)
+                        self.assertEqual('X', attr.default_value)
+            else:
+                self.assertEqual('b', el.name)
+                self.assertEqual(0, len(el.attributes()))
+            seen.append(el.name)
+        seen.sort()
+        self.assertEqual(['a', 'b'], seen)
+        self.assertEqual(2, len(dtd.elements()))
+
+    def test_internal_dtds(self):
+        for el_count in range(2, 5):
+            for attr_count in range(4):
+                root = etree.XML(_bytes('''
+                <!DOCTYPE el0 SYSTEM "none" [
+                ''' + ''.join(['''
+                <!ATTLIST el%d
+                  attr%d (x | y | z) "z"
+                >
+                ''' % (e, a) for a in range(attr_count) for e in range(el_count)
+                ]) + ''.join(['''
+                <!ELEMENT el%d EMPTY>
+                ''' % e for e in range(1, el_count)
+                ]) + '''
+                ''' + '<!ELEMENT el0 (%s)>' % '|'.join([
+                    'el%d' % e for e in range(1, el_count)]) + '''
+                ]>
+                <el0><el1 %s /></el0>
+                ''' % ' '.join(['attr%d="x"' % a for a in range(attr_count)])))
+                dtd = etree.ElementTree(root).docinfo.internalDTD
+                self.assertTrue(dtd)
+                dtd.assertValid(root)
+
+                e = -1
+                for e, el in enumerate(dtd.iterelements()):
+                    self.assertEqual(attr_count, len(el.attributes()))
+                    a = -1
+                    for a, attr in enumerate(el.iterattributes()):
+                        self.assertEqual('enumeration', attr.type)
+                        self.assertEqual('none', attr.default)
+                        self.assertEqual('z', attr.default_value)
+                        values = sorted(attr.values())
+                        self.assertEqual(['x', 'y', 'z'], values)
+                    self.assertEqual(attr_count - 1, a)
+                self.assertEqual(el_count - 1, e)
+                self.assertEqual(el_count, len(dtd.elements()))
 
     def test_dtd_broken(self):
         self.assertRaises(etree.DTDParseError, etree.DTD,
@@ -141,7 +253,7 @@ class ETreeDtdTestCase(HelperTestCase):
             attributes)
 
     def test_dtd_attrs(self):
-        dtd = etree.DTD(fileInTestDir("test.dtd"))
+        dtd = etree.DTD(fileUrlInTestDir("test.dtd"))
 
         # Test DTD.system_url attribute
         self.assertTrue(dtd.system_url.endswith("test.dtd"))
@@ -185,7 +297,7 @@ class ETreeDtdTestCase(HelperTestCase):
         parser = etree.XMLParser(dtd_validation=True)
         xml = '<!DOCTYPE a SYSTEM "test.dtd"><a><b/></a>'
         root = etree.fromstring(xml, parser=parser,
-                                base_url=fileInTestDir("test.xml"))
+                                base_url=fileUrlInTestDir("test.xml"))
 
         dtd = root.getroottree().docinfo.internalDTD
         self.assertEqual(dtd.name, "a")

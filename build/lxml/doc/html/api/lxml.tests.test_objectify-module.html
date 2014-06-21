@@ -203,15 +203,15 @@ Tests specific to the lxml.objectify API
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="lxml.tests.test_objectify-module.html#objectclass2xsitype" class="summary-name">objectclass2xsitype</a> = <code title="{&lt;type 'lxml.objectify.FloatElement'&gt;: ('float', 'double'),
- &lt;type 'lxml.objectify.IntElement'&gt;: ('int',
+        <a href="lxml.tests.test_objectify-module.html#objectclass2xsitype" class="summary-name">objectclass2xsitype</a> = <code title="{&lt;type 'lxml.objectify.IntElement'&gt;: ('int',
                                       'short',
                                       'byte',
                                       'unsignedShort',
                                       'unsignedByte',
                                       'integer',
                                       'nonPositiveInteger',
-..."><code class="variable-group">{</code>&lt;type 'lxml.objectify.FloatElement'&gt;<code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-ellipsis">...</code></code>
+                                      'negativeInteger',
+..."><code class="variable-group">{</code>&lt;type 'lxml.objectify.IntElement'&gt;<code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">i</code><code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
@@ -233,10 +233,10 @@ Tests specific to the lxml.objectify API
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="lxml.tests.test_objectify-module.html#objectclass2pytype" class="summary-name">objectclass2pytype</a> = <code title="{&lt;type 'lxml.objectify.FloatElement'&gt;: 'float',
- &lt;type 'lxml.objectify.IntElement'&gt;: 'int',
- &lt;type 'lxml.objectify.BoolElement'&gt;: 'bool',
- &lt;type 'lxml.objectify.StringElement'&gt;: 'str'}"><code class="variable-group">{</code>&lt;type 'lxml.objectify.FloatElement'&gt;<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">f</code><code class="variable-ellipsis">...</code></code>
+        <a href="lxml.tests.test_objectify-module.html#objectclass2pytype" class="summary-name">objectclass2pytype</a> = <code title="{&lt;type 'lxml.objectify.IntElement'&gt;: 'int',
+ &lt;type 'lxml.objectify.FloatElement'&gt;: 'float',
+ &lt;type 'lxml.objectify.StringElement'&gt;: 'str',
+ &lt;type 'lxml.objectify.BoolElement'&gt;: 'bool'}"><code class="variable-group">{</code>&lt;type 'lxml.objectify.IntElement'&gt;<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">int</code><code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
@@ -401,14 +401,14 @@ Tests specific to the lxml.objectify API
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">{</code>&lt;type 'lxml.objectify.FloatElement'&gt;<code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">float</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">double</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">,</code>
- &lt;type 'lxml.objectify.IntElement'&gt;<code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">int</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+<code class="variable-group">{</code>&lt;type 'lxml.objectify.IntElement'&gt;<code class="variable-op">: </code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">int</code><code class="variable-quote">'</code><code class="variable-op">,</code>
                                       <code class="variable-quote">'</code><code class="variable-string">short</code><code class="variable-quote">'</code><code class="variable-op">,</code>
                                       <code class="variable-quote">'</code><code class="variable-string">byte</code><code class="variable-quote">'</code><code class="variable-op">,</code>
                                       <code class="variable-quote">'</code><code class="variable-string">unsignedShort</code><code class="variable-quote">'</code><code class="variable-op">,</code>
                                       <code class="variable-quote">'</code><code class="variable-string">unsignedByte</code><code class="variable-quote">'</code><code class="variable-op">,</code>
                                       <code class="variable-quote">'</code><code class="variable-string">integer</code><code class="variable-quote">'</code><code class="variable-op">,</code>
                                       <code class="variable-quote">'</code><code class="variable-string">nonPositiveInteger</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+                                      <code class="variable-quote">'</code><code class="variable-string">negativeInteger</code><code class="variable-quote">'</code><code class="variable-op">,</code>
 <code class="variable-ellipsis">...</code>
 </pre></td></tr></table>
 </dd>
@@ -453,10 +453,10 @@ Tests specific to the lxml.objectify API
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">{</code>&lt;type 'lxml.objectify.FloatElement'&gt;<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">float</code><code class="variable-quote">'</code><code class="variable-op">,</code>
- &lt;type 'lxml.objectify.IntElement'&gt;<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">int</code><code class="variable-quote">'</code><code class="variable-op">,</code>
- &lt;type 'lxml.objectify.BoolElement'&gt;<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">bool</code><code class="variable-quote">'</code><code class="variable-op">,</code>
- &lt;type 'lxml.objectify.StringElement'&gt;<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">str</code><code class="variable-quote">'</code><code class="variable-group">}</code>
+<code class="variable-group">{</code>&lt;type 'lxml.objectify.IntElement'&gt;<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">int</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ &lt;type 'lxml.objectify.FloatElement'&gt;<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">float</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ &lt;type 'lxml.objectify.StringElement'&gt;<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">str</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ &lt;type 'lxml.objectify.BoolElement'&gt;<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">bool</code><code class="variable-quote">'</code><code class="variable-group">}</code>
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -541,7 +541,7 @@ Tests specific to the lxml.objectify API
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Fri Dec 20 12:16:06 2013
+    Generated by Epydoc 3.0.1 on Fri Apr 18 08:58:40 2014
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

@@ -10,7 +10,7 @@ struct LxmlElementBase;
 struct LxmlElementClassLookup;
 struct LxmlFallbackElementClassLookup;
 
-/* "/home/stefan/source/Python/lxml/lxml-release/src/lxml/lxml.etree.pyx":302
+/* "/home/stefan/source/Python/lxml/lxml-release/src/lxml/lxml.etree.pyx":335
  * cdef class _BaseParser
  * cdef class QName
  * ctypedef public xmlNode* (*_node_to_node_function)(xmlNode*)             # <<<<<<<<<<<<<<
@@ -19,7 +19,7 @@ struct LxmlFallbackElementClassLookup;
  */
 typedef xmlNode *(*_node_to_node_function)(xmlNode *);
 
-/* "/home/stefan/source/Python/lxml/lxml-release/src/lxml/lxml.etree.pyx":298
+/* "/home/stefan/source/Python/lxml/lxml-release/src/lxml/lxml.etree.pyx":331
  * 
  * # forward declarations
  * cdef public class _Document [ type LxmlDocumentType, object LxmlDocument ]             # <<<<<<<<<<<<<<
@@ -35,7 +35,7 @@ struct LxmlDocument {
   struct __pyx_obj_4lxml_5etree__BaseParser *_parser;
 };
 
-/* "/home/stefan/source/Python/lxml/lxml-release/src/lxml/lxml.etree.pyx":299
+/* "/home/stefan/source/Python/lxml/lxml-release/src/lxml/lxml.etree.pyx":332
  * # forward declarations
  * cdef public class _Document [ type LxmlDocumentType, object LxmlDocument ]
  * cdef public class _Element [ type LxmlElementType, object LxmlElement ]             # <<<<<<<<<<<<<<
@@ -44,15 +44,14 @@ struct LxmlDocument {
  */
 struct LxmlElement {
   PyObject_HEAD
-  PyObject *_gc_doc;
   struct LxmlDocument *_doc;
   xmlNode *_c_node;
   PyObject *_tag;
 };
 
-/* "/home/stefan/source/Python/lxml/lxml-release/src/lxml/lxml.etree.pyx":1736
+/* "/home/stefan/source/Python/lxml/lxml-release/src/lxml/lxml.etree.pyx":1764
  * 
- * @cython.freelist(8)
+ * 
  * cdef public class _ElementTree [ type LxmlElementTreeType,             # <<<<<<<<<<<<<<
  *                                  object LxmlElementTree ]:
  *     cdef _Document _doc
@@ -64,7 +63,7 @@ struct LxmlElementTree {
   struct LxmlElement *_context_node;
 };
 
-/* "/home/stefan/source/Python/lxml/lxml-release/src/lxml/lxml.etree.pyx":2398
+/* "/home/stefan/source/Python/lxml/lxml-release/src/lxml/lxml.etree.pyx":2415
  * 
  * 
  * cdef public class _ElementTagMatcher [ object LxmlElementTagMatcher,             # <<<<<<<<<<<<<<
@@ -80,7 +79,7 @@ struct LxmlElementTagMatcher {
   char *_name;
 };
 
-/* "/home/stefan/source/Python/lxml/lxml-release/src/lxml/lxml.etree.pyx":2429
+/* "/home/stefan/source/Python/lxml/lxml-release/src/lxml/lxml.etree.pyx":2446
  *                 self._name = NULL
  * 
  * cdef public class _ElementIterator(_ElementTagMatcher) [             # <<<<<<<<<<<<<<
@@ -149,14 +148,14 @@ struct LxmlFallbackElementClassLookup {
   #endif
 #endif
 
-__PYX_EXTERN_C DL_IMPORT(PyTypeObject) LxmlElementType;
-__PYX_EXTERN_C DL_IMPORT(PyTypeObject) LxmlElementTagMatcherType;
-__PYX_EXTERN_C DL_IMPORT(PyTypeObject) LxmlElementClassLookupType;
-__PYX_EXTERN_C DL_IMPORT(PyTypeObject) LxmlFallbackElementClassLookupType;
 __PYX_EXTERN_C DL_IMPORT(PyTypeObject) LxmlDocumentType;
+__PYX_EXTERN_C DL_IMPORT(PyTypeObject) LxmlElementType;
 __PYX_EXTERN_C DL_IMPORT(PyTypeObject) LxmlElementTreeType;
+__PYX_EXTERN_C DL_IMPORT(PyTypeObject) LxmlElementTagMatcherType;
 __PYX_EXTERN_C DL_IMPORT(PyTypeObject) LxmlElementIteratorType;
 __PYX_EXTERN_C DL_IMPORT(PyTypeObject) LxmlElementBaseType;
+__PYX_EXTERN_C DL_IMPORT(PyTypeObject) LxmlElementClassLookupType;
+__PYX_EXTERN_C DL_IMPORT(PyTypeObject) LxmlFallbackElementClassLookupType;
 
 __PYX_EXTERN_C DL_IMPORT(struct LxmlElement) *deepcopyNodeToDocument(struct LxmlDocument *, xmlNode *);
 __PYX_EXTERN_C DL_IMPORT(struct LxmlElementTree) *elementTreeFactory(struct LxmlElement *);
@@ -192,6 +191,7 @@ __PYX_EXTERN_C DL_IMPORT(xmlNode) *findChildBackwards(xmlNode *, Py_ssize_t);
 __PYX_EXTERN_C DL_IMPORT(xmlNode) *nextElement(xmlNode *);
 __PYX_EXTERN_C DL_IMPORT(xmlNode) *previousElement(xmlNode *);
 __PYX_EXTERN_C DL_IMPORT(void) appendChild(struct LxmlElement *, struct LxmlElement *);
+__PYX_EXTERN_C DL_IMPORT(int) appendChildToElement(struct LxmlElement *, struct LxmlElement *);
 __PYX_EXTERN_C DL_IMPORT(PyObject) *pyunicode(const xmlChar *);
 __PYX_EXTERN_C DL_IMPORT(PyObject) *utf8(PyObject *);
 __PYX_EXTERN_C DL_IMPORT(PyObject) *getNsTag(PyObject *);

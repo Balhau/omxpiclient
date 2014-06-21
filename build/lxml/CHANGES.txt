@@ -2,6 +2,195 @@
 lxml changelog
 ==============
 
+3.3.5 (2014-04-18)
+==================
+
+Bugs fixed
+----------
+
+* HTML cleaning could fail to strip javascript links that mix control
+  characters into the link scheme.
+
+
+3.3.4 (2014-04-03)
+==================
+
+Features added
+--------------
+
+* Source line numbers above 65535 are available on Elements when
+  using libxml2 2.9 or later.
+
+Bugs fixed
+----------
+
+* ``lxml.html.fragment_fromstring()`` failed for bytes input in Py3.
+
+Other changes
+-------------
+
+
+3.3.3 (2014-03-04)
+==================
+
+Bugs fixed
+----------
+
+* LP#1287118: Crash when using Element subtypes with ``__slots__``.
+
+Other changes
+-------------
+
+* The internal classes ``_LogEntry`` and ``_Attrib`` can no longer be
+  subclassed from Python code.
+
+
+3.3.2 (2014-02-26)
+==================
+
+Bugs fixed
+----------
+
+* The properties ``resolvers`` and ``version``, as well as the methods
+  ``set_element_class_lookup()`` and ``makeelement()``, were lost from
+  ``iterparse`` objects in 3.3.0.
+
+* LP#1222132: instances of ``XMLSchema``, ``Schematron`` and ``RelaxNG``
+  did not clear their local ``error_log`` before running a validation.
+
+* LP#1238500: lxml.doctestcompare mixed up "expected" and "actual" in
+  attribute values.
+
+* Some file I/O tests were failing in MS-Windows due to non-portable temp
+  file usage.  Initial patch by Gabi Davar.
+
+* LP#910014: duplicate IDs in a document were not reported by DTD validation.
+
+* LP#1185332: ``tostring(method="html")`` did not use HTML serialisation
+  semantics for trailing tail text.  Initial patch by Sylvain Viollon.
+
+* LP#1281139: ``.attrib`` value of Comments lost its mutation methods
+  in 3.3.0.  Even though it is empty and immutable, it should still
+  provide the same interface as that returned for Elements.
+
+
+3.3.1 (2014-02-12)
+==================
+
+Features added
+--------------
+
+Bugs fixed
+----------
+
+* LP#1014290: HTML documents parsed with ``parser.feed()`` failed to find
+  elements during tag iteration.
+
+* LP#1273709: Building in PyPy failed due to missing support for
+  ``PyUnicode_Compare()`` and ``PyByteArray_*()`` in PyPy's C-API.
+
+* LP#1274413: Compilation in MSVC failed due to missing "stdint.h" standard
+  header file.
+
+* LP#1274118: iterparse() failed to parse BOM prefixed files.
+
+Other changes
+-------------
+
+
+3.3.0 (2014-01-26)
+==================
+
+Features added
+--------------
+
+Bugs fixed
+----------
+
+* The heuristic that distinguishes file paths from URLs was tightened
+  to produce less false negatives.
+
+Other changes
+-------------
+
+
+3.3.0beta5 (2014-01-18)
+=======================
+
+Features added
+--------------
+
+* The PEP 393 unicode parsing support gained a fallback for wchar strings
+  which might still be somewhat common on Windows systems.
+
+Bugs fixed
+----------
+
+* Several error handling problems were fixed throughout the code base that
+  could previously lead to exceptions being silently swallowed or not
+  properly reported.
+
+* The C-API function ``appendChild()`` is now deprecated as it does not
+  propagate exceptions (its return type is ``void``).  The new function
+  ``appendChildToElement()`` was added as a safe replacement.
+
+* Passing a string into ``fromstringlist()`` raises an exception instead of
+  parsing the string character by character.
+
+Other changes
+-------------
+
+* Document cleanup code was simplified using the new GC features in
+  Cython 0.20.
+
+
+3.3.0beta4 (2014-01-12)
+=======================
+
+Features added
+--------------
+
+Bugs fixed
+----------
+
+* The (empty) value returned by the ``attrib`` property of Entity and Comment
+  objects was mutable.
+
+* Element class lookup wasn't available for the new pull parsers or when using
+  a custom parser target.
+
+* Setting Element attributes on instantiation with both the ``attrib`` argument
+  and keyword arguments could modify the mapping passed as ``attrib``.
+
+* LP#1266171: DTDs instantiated from internal/external subsets (i.e. through
+  the docinfo property) lost their attribute declarations.
+
+Other changes
+-------------
+
+* Built with Cython 0.20pre (gitrev 012ae82eb) to prepare support for
+  Python 3.4.
+
+
+3.3.0beta3 (2014-01-02)
+=======================
+
+Features added
+--------------
+
+* Unicode string parsing was optimised for Python 3.3 (PEP 393).
+
+Bugs fixed
+----------
+
+* HTML parsing of Unicode strings could misdecode the input on some platforms.
+
+* Crash in xmlfile() when closing open elements out of order in an error case.
+
+Other changes
+-------------
+
+
 3.3.0beta2 (2013-12-20)
 =======================
 
@@ -14,6 +203,8 @@ Bugs fixed
 ----------
 
 * Crash in ``iterparse()`` for HTML parsing.
+
+* Crash in target parsing with attributes.
 
 Other changes
 -------------
@@ -78,7 +269,27 @@ Other changes
   for example.
 
 * ``iterparse()`` was rewritten to use the new ``*PullParser``
-  classes internally.
+  classes internally instead of being a parser itself.
+
+
+3.2.5 (2014-01-02)
+==================
+
+Features added
+--------------
+
+Bugs fixed
+----------
+
+* Crash in xmlfile() when closing open elements out of order in an error case.
+
+* Crash in target parsing with attributes.
+
+* LP#1255132: crash when trying to run validation over non-Element (e.g.
+  comment or PI).
+
+Other changes
+-------------
 
 
 3.2.4 (2013-11-07)

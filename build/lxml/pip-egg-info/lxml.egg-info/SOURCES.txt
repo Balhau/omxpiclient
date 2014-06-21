@@ -8,6 +8,7 @@ README.rst
 TODO.txt
 buildlibxml.py
 ez_setup.py
+requirements.txt
 selftest.py
 selftest2.py
 setup.cfg
@@ -59,7 +60,7 @@ doc/html/FAQ.html
 doc/html/api.html
 doc/html/build.html
 doc/html/capi.html
-doc/html/changes-3.3.0beta2.html
+doc/html/changes-3.3.5.html
 doc/html/compatibility.html
 doc/html/credits.html
 doc/html/cssselect.html
@@ -353,6 +354,10 @@ doc/html/api/lxml.tests.test_classlookup.ProxyTestCase-class.html
 doc/html/api/lxml.tests.test_css-module.html
 doc/html/api/lxml.tests.test_css-pysrc.html
 doc/html/api/lxml.tests.test_css.CSSTestCase-class.html
+doc/html/api/lxml.tests.test_doctestcompare-module.html
+doc/html/api/lxml.tests.test_doctestcompare-pysrc.html
+doc/html/api/lxml.tests.test_doctestcompare.DoctestCompareTest-class.html
+doc/html/api/lxml.tests.test_doctestcompare.DummyInput-class.html
 doc/html/api/lxml.tests.test_dtd-module.html
 doc/html/api/lxml.tests.test_dtd-pysrc.html
 doc/html/api/lxml.tests.test_dtd.ETreeDtdTestCase-class.html
@@ -484,6 +489,7 @@ doc/html/api/toc-lxml.tests.dummy_http_server-module.html
 doc/html/api/toc-lxml.tests.test_builder-module.html
 doc/html/api/toc-lxml.tests.test_classlookup-module.html
 doc/html/api/toc-lxml.tests.test_css-module.html
+doc/html/api/toc-lxml.tests.test_doctestcompare-module.html
 doc/html/api/toc-lxml.tests.test_dtd-module.html
 doc/html/api/toc-lxml.tests.test_elementtree-module.html
 doc/html/api/toc-lxml.tests.test_errors-module.html
@@ -548,6 +554,7 @@ pip-egg-info/lxml.egg-info/PKG-INFO
 pip-egg-info/lxml.egg-info/SOURCES.txt
 pip-egg-info/lxml.egg-info/dependency_links.txt
 pip-egg-info/lxml.egg-info/not-zip-safe
+pip-egg-info/lxml.egg-info/requires.txt
 pip-egg-info/lxml.egg-info/top_level.txt
 samples/simple-ns.xml
 samples/simple.xml
@@ -573,6 +580,7 @@ src/lxml/lxml.etree.pyx
 src/lxml/lxml.etree_api.h
 src/lxml/lxml.objectify.c
 src/lxml/lxml.objectify.pyx
+src/lxml/lxml_endian.h
 src/lxml/nsclasses.pxi
 src/lxml/objectpath.pxi
 src/lxml/parser.pxi
@@ -720,6 +728,7 @@ src/lxml/tests/test_broken.xml
 src/lxml/tests/test_builder.py
 src/lxml/tests/test_classlookup.py
 src/lxml/tests/test_css.py
+src/lxml/tests/test_doctestcompare.py
 src/lxml/tests/test_dtd.py
 src/lxml/tests/test_elementtree.py
 src/lxml/tests/test_errors.py

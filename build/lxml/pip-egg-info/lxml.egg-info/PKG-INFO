@@ -1,12 +1,12 @@
 Metadata-Version: 1.1
 Name: lxml
-Version: 3.3.0beta2
+Version: 3.3.5
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.
 Home-page: http://lxml.de/
 Author: lxml dev team
 Author-email: lxml-dev@lxml.de
 License: UNKNOWN
-Download-URL: http://pypi.python.org/packages/source/l/lxml/lxml-3.3.0beta2.tar.gz
+Download-URL: http://pypi.python.org/packages/source/l/lxml/lxml-3.3.5.tar.gz
 Description: lxml is a Pythonic, mature binding for the libxml2 and libxslt libraries.  It
         provides safe and convenient access to these libraries using the ElementTree
         API.
@@ -27,32 +27,29 @@ Description: lxml is a Pythonic, mature binding for the libxml2 and libxslt libr
         https://github.com/lxml/lxml/tarball/master#egg=lxml-dev if you have
         an appropriate version of Cython installed.
         
-        3.3.0beta2 (2013-12-20)
-        =======================
         
-        Features added
-        --------------
+        After an official release of a new stable series, bug fixes may become
+        available at
+        https://github.com/lxml/lxml/tree/lxml-3.3 .
+        Running ``easy_install lxml==3.3bugfix`` will install
+        the unreleased branch state from
+        https://github.com/lxml/lxml/tarball/lxml-3.3#egg=lxml-3.3bugfix
+        as soon as a maintenance branch has been established.  Note that this
+        requires Cython to be installed at an appropriate version for the build.
         
-        * ``iterparse()`` supports the ``recover`` option.
+        3.3.5 (2014-04-18)
+        ==================
         
         Bugs fixed
         ----------
         
-        * Crash in ``iterparse()`` for HTML parsing.
-        
-        Other changes
-        -------------
-        
-        * The safety check in the read-only tree implementation (e.g. used by
-          ``PythonElementClassLookup``) raises a more appropriate ``ReferenceError``
-          for illegal access after tree disposal instead of an ``AssertionError``.
-          This should only impact test code that specifically checks the original
-          behaviour.
+        * HTML cleaning could fail to strip javascript links that mix control
+          characters into the link scheme.
         
         
         
 Platform: UNKNOWN
-Classifier: Development Status :: 4 - Beta
+Classifier: Development Status :: 5 - Production/Stable
 Classifier: Intended Audience :: Developers
 Classifier: Intended Audience :: Information Technology
 Classifier: License :: OSI Approved :: BSD License
@@ -66,6 +63,7 @@ Classifier: Programming Language :: Python :: 3
 Classifier: Programming Language :: Python :: 3.1
 Classifier: Programming Language :: Python :: 3.2
 Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
 Classifier: Programming Language :: C
 Classifier: Operating System :: OS Independent
 Classifier: Topic :: Text Processing :: Markup :: HTML

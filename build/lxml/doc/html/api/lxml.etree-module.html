@@ -1712,13 +1712,13 @@ standard Python logging package.</td>
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a href="lxml.etree-module.html#__pyx_capi__" class="summary-name" onclick="show_private();">__pyx_capi__</a> = <code title="{'appendChild': &lt;capsule object &quot;void (struct LxmlElement *, struct Lx\
-mlElement *)&quot; at 0x1a57e70&gt;,
+mlElement *)&quot; at 0x2b5c0c0&gt;,
+ 'appendChildToElement': &lt;capsule object &quot;int (struct LxmlElement *, s\
+truct LxmlElement *)&quot; at 0x2b5c0f0&gt;,
  'attributeValue': &lt;capsule object &quot;PyObject *(xmlNode *, xmlAttr *)&quot; \
-at 0x1a57b40&gt;,
+at 0x2b58d50&gt;,
  'attributeValueFromNsName': &lt;capsule object &quot;PyObject *(xmlNode *, co\
-nst xmlChar *, const xmlChar *)&quot; at 0x1a57b70&gt;,
- 'callLookupFallback': &lt;capsule object &quot;PyObject *(struct LxmlFallback\
-ElementClassLookup *, struct LxmlDocument *, xmlNode *)&quot; at 0x1a57810&gt;\
+nst xmlChar *, const xmlChar *)&quot; at 0x2b58d80&gt;,
 ..."><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">appendChild</code><code class="variable-quote">'</code><code class="variable-op">: </code>&lt;capsule object &quot;void (struct L<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
@@ -1726,22 +1726,22 @@ ElementClassLookup *, struct LxmlDocument *, xmlNode *)&quot; at 0x1a57810&gt;\
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="lxml.etree-module.html#__test__" class="summary-name" onclick="show_private();">__test__</a> = <code title="{u'XML (line 2967)': u'''XML(text, parser=None, base_url=None)
+        <a href="lxml.etree-module.html#__test__" class="summary-name" onclick="show_private();">__test__</a> = <code title="{u'XML (line 2987)': u'''XML(text, parser=None, base_url=None)
 
     Parses an XML document or fragment from a string constant.
     Returns the root node (or the result returned by a parser target).
     This function can be used to embed &quot;XML literals&quot; in Python code,
     like in
 
-       &gt;&gt;&gt; root = etree.XML(&quot;&lt;root&gt;&lt;test/&gt;&lt;/root&gt;&quot;)
-..."><code class="variable-group">{</code><code class="variable-quote">u'</code><code class="variable-string">XML (line 2967)</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">u'</code><code class="variable-string">XML(text, parser=None, base_</code><code class="variable-ellipsis">...</code></code>
+       &gt;&gt;&gt; root = XML(&quot;&lt;root&gt;&lt;test/&gt;&lt;/root&gt;&quot;)
+..."><code class="variable-group">{</code><code class="variable-quote">u'</code><code class="variable-string">XML (line 2987)</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">u'</code><code class="variable-string">XML(text, parser=None, base_</code><code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr class="private">
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="memory_debugger"></a><span class="summary-name">memory_debugger</span> = <code title="&lt;lxml.etree._MemDebug object at 0x2b9e3cd748d0&gt;">&lt;lxml.etree._MemDebug object at 0x2b9e3cd748d0&gt;</code>
+        <a name="memory_debugger"></a><span class="summary-name">memory_debugger</span> = <code title="&lt;lxml.etree._MemDebug object at 0x2b69f32578c0&gt;">&lt;lxml.etree._MemDebug object at 0x2b69f32578c0&gt;</code>
     </td>
   </tr>
 </table>
@@ -1888,7 +1888,9 @@ This function can be used to embed &quot;XML literals&quot; in Python code,
 like in</p>
 <blockquote>
 <pre class="py-doctest">
-<span class="py-prompt">&gt;&gt;&gt; </span>root = etree.XML(<span class="py-string">&quot;&lt;root&gt;&lt;test/&gt;&lt;/root&gt;&quot;</span>)</pre>
+<span class="py-prompt">&gt;&gt;&gt; </span>root = XML(<span class="py-string">&quot;&lt;root&gt;&lt;test/&gt;&lt;/root&gt;&quot;</span>)
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">print</span>(root.tag)
+<span class="py-output">root</span></pre>
 </blockquote>
 <p>To override the parser with a different <tt class="rst-docutils literal">XMLParser</tt> you can pass it to
 the <tt class="rst-docutils literal">parser</tt> keyword argument.</p>
@@ -2332,7 +2334,7 @@ on the tail text of children, which will always be serialised.</p>
   <dl class="fields">
   </dl>
 <div class="fields">      <p><strong>Deprecated:</strong>
-        use <tt class="rst-rst-docutils literal rst-docutils literal">tostring(el, encoding=unicode)</tt> instead.
+        use <tt class="rst-rst-docutils literal rst-docutils literal">tostring(el, <span class="pre">encoding='unicode')</span></tt> instead.
       </p>
 </div></td></tr></table>
 </div>
@@ -2393,13 +2395,13 @@ function will only set the global error log of the current thread.</p>
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
 <code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">appendChild</code><code class="variable-quote">'</code><code class="variable-op">: </code>&lt;capsule object &quot;void (struct LxmlElement *, struct Lx<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-mlElement *)&quot; at 0x1a57e70&gt;<code class="variable-op">,</code>
+mlElement *)&quot; at 0x2b5c0c0&gt;<code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">appendChildToElement</code><code class="variable-quote">'</code><code class="variable-op">: </code>&lt;capsule object &quot;int (struct LxmlElement *, s<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+truct LxmlElement *)&quot; at 0x2b5c0f0&gt;<code class="variable-op">,</code>
  <code class="variable-quote">'</code><code class="variable-string">attributeValue</code><code class="variable-quote">'</code><code class="variable-op">: </code>&lt;capsule object &quot;PyObject *(xmlNode *, xmlAttr *)&quot; <span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-at 0x1a57b40&gt;<code class="variable-op">,</code>
+at 0x2b58d50&gt;<code class="variable-op">,</code>
  <code class="variable-quote">'</code><code class="variable-string">attributeValueFromNsName</code><code class="variable-quote">'</code><code class="variable-op">: </code>&lt;capsule object &quot;PyObject *(xmlNode *, co<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-nst xmlChar *, const xmlChar *)&quot; at 0x1a57b70&gt;<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">callLookupFallback</code><code class="variable-quote">'</code><code class="variable-op">: </code>&lt;capsule object &quot;PyObject *(struct LxmlFallback<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-ElementClassLookup *, struct LxmlDocument *, xmlNode *)&quot; at 0x1a57810&gt;<code class="variable-op"></code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+nst xmlChar *, const xmlChar *)&quot; at 0x2b58d80&gt;<code class="variable-op">,</code>
 <code class="variable-ellipsis">...</code>
 </pre></td></tr></table>
 </dd>
@@ -2418,14 +2420,14 @@ ElementClassLookup *, struct LxmlDocument *, xmlNode *)&quot; at 0x1a57810&gt;<c
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">{</code><code class="variable-quote">u'</code><code class="variable-string">XML (line 2967)</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">u'''</code><code class="variable-string">XML(text, parser=None, base_url=None)</code>
+<code class="variable-group">{</code><code class="variable-quote">u'</code><code class="variable-string">XML (line 2987)</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">u'''</code><code class="variable-string">XML(text, parser=None, base_url=None)</code>
 <code class="variable-string"></code>
 <code class="variable-string">    Parses an XML document or fragment from a string constant.</code>
 <code class="variable-string">    Returns the root node (or the result returned by a parser target).</code>
 <code class="variable-string">    This function can be used to embed &quot;XML literals&quot; in Python code,</code>
 <code class="variable-string">    like in</code>
 <code class="variable-string"></code>
-<code class="variable-string">       &gt;&gt;&gt; root = etree.XML(&quot;&lt;root&gt;&lt;test/&gt;&lt;/root&gt;&quot;)</code>
+<code class="variable-string">       &gt;&gt;&gt; root = XML(&quot;&lt;root&gt;&lt;test/&gt;&lt;/root&gt;&quot;)</code>
 <code class="variable-ellipsis">...</code>
 </pre></td></tr></table>
 </dd>
@@ -2464,7 +2466,7 @@ ElementClassLookup *, struct LxmlDocument *, xmlNode *)&quot; at 0x1a57810&gt;<c
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Fri Dec 20 12:16:06 2013
+    Generated by Epydoc 3.0.1 on Fri Apr 18 08:58:40 2014
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
