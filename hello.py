@@ -86,7 +86,7 @@ def print_post():
 	file_path = request.form['file']
 	dir_path = request.form['path']
 	os.system('killall omxplayer.bin')
-	command='omxplayer '+sh_quote(dir_path)+sh_quote(file_path)+' &'
+	command='omxplayer '+sh_quote(dir_path)+sh_quote(file_path)+' -o local &'
 	if file_path and dir_path:
 		#print command
 		args=shlex.split(command)
@@ -96,7 +96,7 @@ def print_post():
 
 @app.route('/listdir',methods=['POST'])
 def list_dir():
-	extensions=['mp4','mkv','avi','flv','mp3']
+	extensions=['mp4','mkv','avi','flv','mp3','mov']
 	path=request.form['path']
 	if path :
 		jsData=[f for f in listdir(path) if f[-3:] in extensions or os.path.isdir(os.path.join(path,f))]
@@ -155,6 +155,22 @@ def playRadio():
 	r=RadioService()
 	r.playRadio(radioStation)
 	return '{"status":true}'
+
+@app.route("/ping",methods={'GET'})
+def ping():
+	f=open('ipping.txt','a')
+	ipclient=""
+	h = request.headers
+        for header, value in request.headers.items():
+		if(header == 'X-Forwarded-For'):
+			ipclient=value
+        
+	f.write("{'host': '"+request.args.get('host')+"',")
+	f.write("'ip': '"+ipclient+"'}")
+	f.write("\n")
+	f.close()
+	return '{"status":true}'
+
 		
 @app.route('/stopradio',methods=['GET'])
 def stopRadio():
