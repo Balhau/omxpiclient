@@ -19,6 +19,24 @@ def index():
 def youtube():
 	return render_template('youtube.html')
 
+@app.route('/torrents')
+def torrents():
+	return render_template('torrents.html')
+
+@app.route('/starttorrents')
+def starttorrents():
+	#then run the start script
+	#first stop the deamon if it is enabled
+	os.system('killall -9 transmission-daemon')
+	os.system('~/starttorrent.sh')
+	return "{status:true}"
+
+@app.route('/stoptorrents')
+def stoptorrents():
+	#just kill the transmission daemon
+	os.system('killall -9 transmission-daemon')
+	return "{status:true}"
+
 @app.route('/pl',methods=["POST"])
 def teste():
 	global omxProcess
@@ -164,14 +182,14 @@ def ping():
         for header, value in request.headers.items():
 		if(header == 'X-Forwarded-For'):
 			ipclient=value
-        
+
 	f.write("{'host': '"+request.args.get('host')+"',")
 	f.write("'ip': '"+ipclient+"'}")
 	f.write("\n")
 	f.close()
 	return '{"status":true}'
 
-		
+
 @app.route('/stopradio',methods=['GET'])
 def stopRadio():
 	r=RadioService()
