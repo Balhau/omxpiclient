@@ -56,7 +56,7 @@ div.green{
 
 div.menu{
 	text-align:center;
-	
+
 }
 
 div.menu_item{
@@ -82,7 +82,7 @@ a:visited{
 a{
 	color: #E2E2E2;
 	text-decoration: none !important;
-	
+
 }
 
 div.red{
@@ -159,7 +159,7 @@ select{
 
 div.main{
 	padding-bottom:5%;
-	margin-top:10%;
+	margin-top: 5%;
 	padding-top:5%;
 	margin-left:2.5%;
 	width:95%;
