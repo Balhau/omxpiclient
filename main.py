@@ -23,6 +23,10 @@ def youtube():
 def torrents():
 	return render_template('torrents.html')
 
+@app.route('/messages')
+def messages():
+	return render_template('messages.html')
+
 @app.route('/starttorrents')
 def starttorrents():
 	#then run the start script

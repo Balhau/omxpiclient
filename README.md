@@ -11,7 +11,7 @@ Next steps:
 
 ##Software needed
 
-This front end application use on back end some utility programs you need to install first to successfully run this program. They are needed, for example, to render video on raspberry, parse and download media stream from public endpoints and to play and stop stream of audio (for example for the radio mechanism). 
+This front end application use on back end some utility programs you need to install first to successfully run this program. They are needed, for example, to render video on raspberry, parse and download media stream from public endpoints and to play and stop stream of audio (for example for the radio mechanism).
 Without further add here are the programs:
 
 * omxplayer: Program to render video
@@ -21,6 +21,12 @@ Without further add here are the programs:
 
 # Future developments
 
-The next milestone is all about live tv. Know the time is about find and reverse RTMP endpoints and store it on the server. When a significantly number of endpoints is stored and working we will proced to the development of front end views and python controllers to able the Pi to play those live stream videos. Yes we could develop this in parallel, however I think it's preferable going by baby steps. 
+The next milestone is all about live tv. Know the time is about find and reverse RTMP endpoints and store it on the server. When a significantly number of endpoints is stored and working we will proced to the development of front end views and python controllers to able the Pi to play those live stream videos. Yes we could develop this in parallel, however I think it's preferable going by baby steps.
 
 Don't worry, be happy
+
+# To run
+
+To run this app you just need to type
+
+    python main.py
