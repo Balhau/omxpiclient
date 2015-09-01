@@ -157,6 +157,18 @@ select{
 	font-size:14pt;
 }
 
+div.messageLog{
+	background-color: #A0FFA0;
+	color:grey;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+li.message{
+	list-style-type:none;
+	margin-bottom:5px;
+}
+
 div.main{
 	padding-bottom:5%;
 	margin-top: 5%;
