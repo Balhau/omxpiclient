@@ -1,4 +1,0 @@
-#!/bin/bash
-echo "Playing :$1"
-youtube-dl "$1" -o /home/pi/player.fifo &
-omxplayer /home/pi/player.fifo
