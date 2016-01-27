@@ -1,0 +1,105 @@
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link href="static/css/main.css" type="text/css" rel="stylesheet" >
+		<script src="static/js/js.js"></script>
+		<title>PIOmxControl</title>
+	</head>
+	<body>
+		<div class="main">
+			<h1 class="header_one"><a href="/">BMC</a></h1>
+			<div class="vid-controls">
+				<input class="btn-control" type="button" id="sndUp" value="UP"/>
+				<input class="btn-control" type="button" id="sndDw" value="DW"/>
+				<input class="btn-control" type="button" id="tooglePlay" value="Pause/Play"/>
+				<input class="btn-control" type="button" id="forward" value="Forward"/>
+				<input class="btn-control" type="button" id="backward" value="Backwards"/>
+				<input class="btn-control" type="button" id="subtitles" value="Subtitles"/>
+			</div>
+			<select id="filesSelect">
+			</select>
+			<input class="button" type="text" id="folder" value="/media/samba/hdb/torrents/"/>
+			<input class="button" type="button" id="play" value="Play"/>
+			<input class="button" type="button" id="list" value="List Files"/>
+			<input class="button" type="button" id="stop" value="Stop"/>
+			
+		</div>
+	</body>
+	<script>
+		var sel=$("filesSelect");
+		var CreateData=function(data){
+			var str="";
+			for(var i=0;i<data.length;i++){
+				str+="<option>"+data[i]+"</option>";
+			}
+			sel.innerHTML=str;
+		}
+		$('stop').onclick=function(){
+			var aj=new BLauLib.Ajax();
+			aj.open("GET","/killomx");
+			aj.send(null);
+			$('play').disabled=false;
+			$('play').value="Play";
+		}
+		$('list').onclick=function(){
+    			var aj=new BLauLib.Ajax();
+    			aj.addVar("path",$('folder').value);
+    			aj.onLoaded=function(){
+        			var data=aj.getJSON();
+        			CreateData(data);
+    			}
+    			aj.callPost("listdir");
+		}
+		$('play').onclick=function(){
+    			var aj=new BLauLib.Ajax();
+    			aj.addVar("path",$('folder').value);
+    			aj.addVar("file",$('filesSelect').value);
+    			aj.onLoaded=function(){
+         			$('play').disabled=true;
+				$('play').value="Playing";
+    			}
+    			aj.callPost("play");
+		}
+
+		var btns=[
+				['sndDw','-'],['sndUp','+'],['tooglePlay',' '],
+				['forward','o'],['backward','i'],['subtitles','s']
+			 ];
+		
+		var sendCommand=function(cmd){
+			var aj=new BLauLib.Ajax();
+			aj.addVar("command",encodeURIComponent(cmd));
+			aj.onLoaded=function(){};
+			aj.callPost("command");
+		};
+		
+                btns.BMap(function(el,pos){
+			var btn=el[0];
+			var com=el[1];
+			$(btn).onclick=function(){
+				sendCommand(com);
+			}
+		});
+		/*
+		$('sndDw').onclick=function(){
+			sendCommand('-');
+		};
+
+		$('sndUp').onclick=function(){
+			sendCommand('+');	
+		};
+
+		$('tooglePlay').onclick=function(){
+			sendCommand(' ');
+		};
+		*/
+	
+		var sendCommand=function(cmd){
+			var aj=new BLauLib.Ajax();
+			aj.addVar("command",encodeURIComponent(cmd));
+			aj.onLoaded=function(){}
+			aj.callPost("command");
+		};
+	</script>
+</html>

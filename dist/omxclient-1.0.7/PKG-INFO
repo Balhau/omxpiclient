@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: omxclient
+Version: 1.0.7
+Summary: A python client for omxplayer and other webutility stuff
+Home-page: https://git.balhau.net/
+Author: Balhau
+Author-email: balhau@balhau.net
+License: MIT License
+Description: UNKNOWN
+Platform: any

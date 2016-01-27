@@ -27,9 +27,10 @@ def torrents():
 def messages():
 	return render_template('messages.html')
 
-@app.route("/youtubev3/search")
+@app.route("/youtubev3/search",methods=["POST"])
 def youtubeSearch():
-	return "YES"
+	url=request.form['url']
+	return "YES: "+url
 
 @app.route('/starttorrents')
 def starttorrents():

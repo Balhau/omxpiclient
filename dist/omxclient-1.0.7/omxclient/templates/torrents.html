@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="static/css/main.css" type="text/css" rel="stylesheet" >
+    <script src="static/js/js.js"></script>
+    <title>PIOmxControl</title>
+  </head>
+  <body>
+    <div class="main">
+      <h1 class="header_one"><a href="/">BMC</a></h1>
+      <div class="vid-controls">
+        <input class="btn-control" type="button" id="startBtn" value="START"/>
+        <input class="btn-control" type="button" id="stopBtn" value="STOP"/>
+      </div>
+    </div>
+  </body>
+  <script>
+    $('stopBtn').onclick=function(){
+      var aj=new BLauLib.Ajax();
+      aj.open("GET","/stoptorrents");
+      aj.send(null);
+    };
+    $('startBtn').onclick=function(){
+          var aj=new BLauLib.Ajax();
+          aj.open("GET","/starttorrents");
+          aj.send(null);
+    };
+  </script>
+</html>
