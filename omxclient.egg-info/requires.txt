@@ -1,3 +1,0 @@
-flask
-lxml
-google-api-python-client

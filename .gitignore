@@ -3,3 +3,4 @@ venv/
 .pydevproject
 build/
 dist/
+omxclient.egg-info/
