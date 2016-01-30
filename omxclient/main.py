@@ -5,7 +5,14 @@ import subprocess,shlex,json,os,signal
 from os import listdir
 from os.path import isfile, join
 from radio import *
+from downloader import *
 
+
+host='192.168.1.169'
+port=5672
+outputdir="/media/samba/hdc1/MediaLibrary/tmp"
+
+yd=YoutubeMQDownloader(host,port,'omxyoutube',outputdir)
 
 app=Flask(__name__)
 
@@ -26,6 +33,14 @@ def torrents():
 @app.route('/messages')
 def messages():
 	return render_template('messages.html')
+
+
+@app.route("/youtube/downloader",methods=["POST"])
+def youtubeDownload():
+	print "ENTROU"
+	url=request.form['url']
+	yd.download(url)
+	return "OK"
 
 @app.route("/youtubev3/search",methods=["POST"])
 def youtubeSearch():

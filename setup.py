@@ -27,10 +27,10 @@ setup(
 	long_description=__doc__,
     platforms='any',
 	packages=packages,
-    #test_suite="tests",
+    test_suite="tests",
     install_requires=[
           'flask',
-	  	   'lxml',
+	  	   'l	xml',
 		   'google-api-python-client'
       ]
 )
