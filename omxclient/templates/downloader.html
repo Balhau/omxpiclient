@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link href="static/css/main.css" type="text/css" rel="stylesheet" >
+		<script src="static/js/js.js"></script>
+		<title>PIOmxControl</title>
+	</head>
+	<body>
+		<div class="main">
+			<h1 class="header_one"><a href="/">BMC</a></h1>
+			<input class="text" type="text" id="url"/>
+			<input class="button" type="button" id="download" value="Download"/>
+		</div>
+	</body>
+	<script>
+		$('download').onclick=function(){
+    			var aj=new BLauLib.Ajax();
+    			aj.addVar("url",$('url').value);
+    			aj.onLoaded=function(){}
+    			aj.callPost("/youtube/downloader");
+		}
+
+		var sendCommand=function(cmd){
+			var aj=new BLauLib.Ajax();
+			aj.addVar("command",encodeURIComponent(cmd));
+			aj.onLoaded=function(){}
+			aj.callPost("command");
+		};
+	</script>
+</html>

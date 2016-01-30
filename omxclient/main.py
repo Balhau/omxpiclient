@@ -10,7 +10,7 @@ from downloader import *
 
 host='192.168.1.169'
 port=5672
-outputdir="/media/samba/hdc1/MediaLibrary/tmp"
+outputdir="/media/samba/hdc1/MediaLibrary/downloads"
 
 yd=YoutubeMQDownloader(host,port,'omxyoutube',outputdir)
 
@@ -41,6 +41,10 @@ def youtubeDownload():
 	url=request.form['url']
 	yd.download(url)
 	return "OK"
+
+@app.route("/downloader")
+def downloader():
+	return render_template('downloader.html')
 
 @app.route("/youtubev3/search",methods=["POST"])
 def youtubeSearch():
