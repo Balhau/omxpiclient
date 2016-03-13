@@ -19,14 +19,20 @@ Without further add here are the programs:
 * mpd: Daemon to reproduce audio
 * mpc: Utility to parse and reproduce endpoints
 
-# Future developments
+## To install
 
-The next milestone is all about live tv. Know the time is about find and reverse RTMP endpoints and store it on the server. When a significantly number of endpoints is stored and working we will proced to the development of front end views and python controllers to able the Pi to play those live stream videos. Yes we could develop this in parallel, however I think it's preferable going by baby steps.
+To install you can follow the instructions presented in the [docker project](http://git.balhau.net/docker.git/) more specifically under [this module](http://git.balhau.net/docker.git/tree/master/omxclient/). To install the dependencies you can just reproduce the steps done in the [Dockerfile](http://git.balhau.net/docker.git/blob/master/omxclient/Dockerfile). Notice, however, that the instructions are for centos distributions, so you need to make some adjustments if you got a Debian based distribution.
 
-Don't worry, be happy
+If you just want to run the application without much fuss you can just follow the instructions presented there and run the component in Docker containers by following the instructions presented there.
 
-# To run
+For those who want to install manually in a host environment you can just install the package from the [pip repository]() by running
 
-To run this app you just need to type
+    pip install omxclient --upgrade --extra-index-url  http://pip.balhau.net/simple
 
-    python main.py
+## To run
+
+To run the app you need to find your distribution packages folder and then run the *main.py* file. In the debian based distributions you can do it like this
+
+    sudo nohup python /usr/local/lib/python2.7/dist-packages/omxclient/main.py &
+
+The nohup and is needed if you want to run the process in background. The logs will go to nohup.out file 
