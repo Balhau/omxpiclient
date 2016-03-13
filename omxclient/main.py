@@ -6,11 +6,12 @@ from os import listdir
 from os.path import isfile, join
 from radio import *
 from downloader import *
+from utils import *
 
 
 host='192.168.1.169'
 port=5672
-outputdir="/media/samba/hdc1/MediaLibrary/downloads"
+outputdir="/media/BalhauWD/MediaLibrary/downloads"
 
 yd=YoutubeMQDownloader(host,port,'omxyoutube',outputdir)
 
@@ -36,6 +37,7 @@ def messages():
 
 
 @app.route("/youtube/downloader",methods=["POST"])
+@crossdomain(origin='*')
 def youtubeDownload():
 	print "ENTROU"
 	url=request.form['url']
