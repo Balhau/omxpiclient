@@ -46,7 +46,7 @@ def youtubeDownload():
 	yd.download(url)
 	return "OK"
 
-@app.rout("/api/description",methods=["GET"])
+@app.route("/api/description",methods=["GET"])
 @crossdomain(origin='*')
 def apiDescription():
 	return json.dumps(API)
