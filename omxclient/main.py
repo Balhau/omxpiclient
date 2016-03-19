@@ -12,6 +12,7 @@ from utils import *
 host='192.168.1.169'
 port=5672
 outputdir="/media/BalhauWD/MediaLibrary/downloads"
+torrentsStartCommand='/home/pi/starttorrent.sh'
 
 yd=YoutubeMQDownloader(host,port,'omxyoutube',outputdir)
 
@@ -54,14 +55,16 @@ def youtubeSearch():
 	return "YES: "+url
 
 @app.route('/starttorrents')
+@crossdomain(origin='*')
 def starttorrents():
 	#then run the start script
 	#first stop the deamon if it is enabled
 	os.system('killall -9 transmission-daemon')
-	os.system('~/starttorrent.sh')
+	os.system(torrentsStartCommand)
 	return "{status:true}"
 
 @app.route('/stoptorrents')
+@crossdomain(origin='*')
 def stoptorrents():
 	#just kill the transmission daemon
 	os.system('killall -9 transmission-daemon')

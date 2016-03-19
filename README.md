@@ -1,4 +1,4 @@
-#PIOmxControl
+# PIOmxControl
 
 This is a web interface for RaspberryPI and omxplayer. This enable a device with a web browser
 to search for movies, to play and stop. This is a very elementary tool but it is the bare minimum to
@@ -35,4 +35,4 @@ To run the app you need to find your distribution packages folder and then run t
 
     sudo nohup python /usr/local/lib/python2.7/dist-packages/omxclient/main.py &
 
-The nohup and is needed if you want to run the process in background. The logs will go to nohup.out file 
+The nohup and is needed if you want to run the process in background. The logs will go to nohup.out file

@@ -25,7 +25,7 @@ class YoutubeMQDownloader:
 
 
     def __init__(self,rabbitMQHost,rabbitMQPort,q,directory):
-        con = pika.BlockingConnection(pika.ConnectionParameters(rabbitMQHost,rabbitMQPort))
+        con = pika.BlockingConnection(pika.ConnectionParameters(rabbitMQHost,rabbitMQPort,socket_timeout=60000))
         self.odir=directory
         self.queue=q
         self.pchannel=con.channel()
