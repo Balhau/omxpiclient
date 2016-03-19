@@ -7,6 +7,7 @@ from os.path import isfile, join
 from radio import *
 from downloader import *
 from utils import *
+from api import API
 
 
 host='192.168.1.169'
@@ -44,6 +45,11 @@ def youtubeDownload():
 	url=request.form['url']
 	yd.download(url)
 	return "OK"
+
+@app.rout("/api/description",methods=["GET"])
+@crossdomain(origin='*')
+def apiDescription():
+	return json.dumps(API)
 
 @app.route("/downloader")
 def downloader():
