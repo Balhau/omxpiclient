@@ -1,4 +1,3 @@
-import pika
 import threading
 import time
 import os
@@ -19,7 +18,6 @@ class YoutubeMQDownloader:
             print "Downloading ", body
             os.system(dirc + " &&  youtube-dl "+body)
             print "Retrieving data from ", self.odir, " &&  youtube-dl ", body
-            channel.basic_ack(delivery_tag=method_frame.delivery_tag)
         except Exception as e:
             print e
 

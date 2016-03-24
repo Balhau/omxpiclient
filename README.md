@@ -36,3 +36,7 @@ To run the app you need to find your distribution packages folder and then run t
     sudo nohup python /usr/local/lib/python2.7/dist-packages/omxclient/main.py &
 
 The nohup and is needed if you want to run the process in background. The logs will go to nohup.out file
+
+## Next development steps
+
+The next feature I want to provide is the ability to list the pending download operations. Currently we hold the list of pending downloading requests on a rabbitmq queue. This will be replaced by a combination of a in memory queue with the help of a SQLite database for persistence reasons. This will add a litle more of complexity but will add, hopefully, a little more of resilience  than the current solution. The problem is that the requests take a fair amount of time to process and this causes timeout errors in the current rabbitmq consumer. Additionally the use of rabbitmq is an external dependency that adds complexity to the utility. This can be tackled in a simpler way by this new strategy.
