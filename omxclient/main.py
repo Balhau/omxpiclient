@@ -5,7 +5,7 @@ import subprocess,shlex,json,os,signal
 from os import listdir
 from os.path import isfile, join
 from radio import *
-from downloader import *
+from downloaders.downloader import *
 from utils import *
 from api import API
 
