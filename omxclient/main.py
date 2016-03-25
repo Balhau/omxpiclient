@@ -10,8 +10,8 @@ from utils import *
 from api import buildAPI
 
 
-#outputdir="/media/BalhauWD/MediaLibrary/downloads"
-outputdir="/tmp/"
+outputdir="/media/BalhauWD/MediaLibrary/downloads"
+#outputdir="/tmp/"
 torrentsStartCommand='/home/pi/starttorrent.sh'
 
 rd=ResourceDownloader(outputdir)
