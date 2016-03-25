@@ -12,8 +12,8 @@ from api import buildAPI
 
 host='192.168.1.169'
 port=5672
-#outputdir="/media/BalhauWD/MediaLibrary/downloads"
-outputdir="/tmp/"
+outputdir="/media/BalhauWD/MediaLibrary/downloads"
+#outputdir="/tmp/"
 torrentsStartCommand='/home/pi/starttorrent.sh'
 
 rd=ResourceDownloader(outputdir)
