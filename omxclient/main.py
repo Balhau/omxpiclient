@@ -210,6 +210,15 @@ def getradiocountry():
 		pos=pos+1
 	return json.dumps(nlist)
 
+@app.route('/list/downloads/pending',methods=['GET'])
+def listDownloadsPending():
+	s=Session()
+	requests=s.query(DownloadRequest).all()
+	pending=[]
+	for request in requests:
+		pending.append(request.toSerializable())
+	return json.dumps(pending)
+
 @app.route('/playradio',methods=['POST'])
 def playRadio():
 	radioStation=request.form['radio']

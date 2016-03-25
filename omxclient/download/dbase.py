@@ -17,6 +17,9 @@ class DownloadRequest(Base):
      service = Column(String)
      url = Column(String)
 
+     def toSerializable(self):
+         return {'id':self.id,'service':self.service,'url':self.url}
+
      def __repr__(self):
         return "<DownloadRequest(id='%s',service='%s', request='%s')>" % (
                              self.id, self.service, self.url)

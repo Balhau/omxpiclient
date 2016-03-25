@@ -8,7 +8,8 @@ def buildAPI(hostname):
         ],
         'api' : {
             'start_torrents' : 'http://'+hostname+'/starttorrents',
-            'stop_torrents' : 'http://'+hostname+'/stoptorrents'
+            'stop_torrents' : 'http://'+hostname+'/stoptorrents',
+            'list_downloads' : 'http://'+hostname+'/list/downloads/pending'
         }
     }
     return API;

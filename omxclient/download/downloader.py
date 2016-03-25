@@ -70,7 +70,7 @@ class ResourceDownloader:
                 try:
                     request=self.queue.get(timeout=5)
                     #This sleep is to avoid race condition
-                    time.sleep(0.1)
+                    time.sleep(0.5)
                     empty=False
                 except:
                     empty=True
