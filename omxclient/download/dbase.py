@@ -18,7 +18,7 @@ class DownloadRequest(Base):
      url = Column(String)
 
      def __repr__(self):
-        return "<DownloadRequest(service='%s', request='%s')>" % (
+        return "<DownloadRequest(id='%s',service='%s', request='%s')>" % (
                              self.id, self.service, self.url)
 
 #Create the database

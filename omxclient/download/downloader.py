@@ -1,14 +1,23 @@
 import threading
 import signal
 import time
+import os
 from Queue import Queue
-from callbacks import *
 from sqlalchemy.orm import scoped_session
 from dbase import session_factory,DownloadRequest
 
 """
     This will download videos from youtube with the invocation of youtube-dl
 """
+
+def downloadYoutube(outputdir,body):
+    dirc="cd "+outputdir
+    try:
+        print "Downloading ", body
+        os.system(dirc + " &&  youtube-dl "+body)
+        print "Retrieving data from ", outputdir, " &&  youtube-dl ", body
+    except Exception as e:
+        print e
 
 RESOURCE_CALLBACKS={
     'youtube' : downloadYoutube
@@ -43,12 +52,12 @@ class ResourceDownloader:
 
     # This will fetch the pending requests that are stored in sqlite
     def __initialPopulate(self):
-        session=Session()
-        for request in session.query(DownloadRequest).all():
+        s=Session()
+        requests=s.query(DownloadRequest).all()
+        for request in requests:
             print "Added pending request: ", request.url
             self.queue.put(request)
         Session.remove()
-
 
     def __consume(self):
         empty=False
@@ -56,33 +65,36 @@ class ResourceDownloader:
         print self.killer.kill_now
         while self.killer.kill_now != True:
             try:
-                s=Session()
                 #Fetch request from the queue
-                print "Fetching"
+                print "Consuming"
                 try:
-                    request=self.queue.get(timeout=1)
+                    request=self.queue.get(timeout=5)
+                    #This sleep is to avoid race condition
+                    time.sleep(0.1)
                     empty=False
                 except:
                     empty=True
                 if not empty:
-                    print "Fetching: "
-                    ##Get the proper callback and process the request url provided
+                    s=Session()
+                    s.add(request)
+                    print "Fetching: ",request.url
+                    #Get the proper callback and process the request url provided
                     RESOURCE_CALLBACKS[request.service](self.output_directory,request.url)
                     #Remove from the pending requests table
                     s.delete(request)
                     s.commit()
+                    s.flush()
                     Session.remove()
-
             except KeyboardInterrupt:
                 print "INTERRUPT 2"
                 raise
 
     def putRequest(self,request):
-        session=Session()
-        session.add(request)
-        session.commit()
-        Session.remove()
+        s=Session()
         self.queue.put(request)
+        s.add(request)
+        s.commit()
+        Session.remove()
 
     def download(self,s,u):
         print " --> Request Received ", u
