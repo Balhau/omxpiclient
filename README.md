@@ -25,7 +25,7 @@ To install you can follow the instructions presented in the [docker project](htt
 
 If you just want to run the application without much fuss you can just follow the instructions presented there and run the component in Docker containers by following the instructions presented there.
 
-For those who want to install manually in a host environment you can just install the package from the [pip repository]() by running
+For those who want to install manually in a host environment you can just install the package from the [pip repository](http://pip.balhau.net/simple) by running
 
     pip install omxclient --upgrade --extra-index-url  http://pip.balhau.net/simple
 
