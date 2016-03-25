@@ -18,7 +18,7 @@ setup(
 	name='omxclient',
 	author='Balhau',
 	author_email='balhau@balhau.net',
-	version='1.2.0',
+	version='1.2.1',
 	url='https://git.balhau.net/',
 	license='MIT License',
 	#scripts=['bin/eclient'],

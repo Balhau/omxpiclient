@@ -50,7 +50,12 @@ def youtubeDownload():
 @app.route("/api/description",methods=["GET"])
 @crossdomain(origin='*')
 def apiDescription():
-	return json.dumps(buildAPI(request.headers['host']))
+	host=None
+	try:
+		host=request.headers['X-Forwarded-Host']
+	except:
+		host=request.headers['host']
+	return json.dumps(buildAPI(host))
 
 @app.route("/downloader")
 def downloader():
