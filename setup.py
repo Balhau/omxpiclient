@@ -18,7 +18,7 @@ setup(
 	name='omxclient',
 	author='Balhau',
 	author_email='balhau@balhau.net',
-	version='1.1.2',
+	version='1.2.0',
 	url='https://git.balhau.net/',
 	license='MIT License',
 	#scripts=['bin/eclient'],
@@ -32,6 +32,7 @@ setup(
           'flask',
 	  	   'lxml',
 		   'google-api-python-client',
-		   'pika'
+		   'pika',
+		   'sqlalchemy'
       ]
 )

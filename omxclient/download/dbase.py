@@ -24,4 +24,4 @@ class DownloadRequest(Base):
 #Create the database
 Base.metadata.create_all(engine)
 #Setup the a session engine
-Session = sessionmaker(bind=engine)
+session_factory = sessionmaker(bind=engine)

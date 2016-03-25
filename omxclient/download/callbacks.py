@@ -1,6 +1,7 @@
-
+import os
 # Downloader mechanism for youtube
-def downloadYoutube(self, body, outputdir):
+def downloadYoutube(outputdir,body):
+    dirc="cd "+outputdir
     try:
         print "Downloading ", body
         os.system(dirc + " &&  youtube-dl "+body)

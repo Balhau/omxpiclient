@@ -2,20 +2,21 @@ from flask import Flask
 from flask import request
 from flask import render_template
 import subprocess,shlex,json,os,signal
+from download.downloader import *
 from os import listdir
 from os.path import isfile, join
 from radio import *
-from downloaders.downloader import *
 from utils import *
-from api import API
+from api import buildAPI
 
 
 host='192.168.1.169'
 port=5672
-outputdir="/media/BalhauWD/MediaLibrary/downloads"
+#outputdir="/media/BalhauWD/MediaLibrary/downloads"
+outputdir="/tmp/"
 torrentsStartCommand='/home/pi/starttorrent.sh'
 
-yd=YoutubeMQDownloader(host,port,'omxyoutube',outputdir)
+rd=ResourceDownloader(outputdir)
 
 app=Flask(__name__)
 
@@ -43,13 +44,13 @@ def messages():
 def youtubeDownload():
 	print "ENTROU"
 	url=request.form['url']
-	yd.download(url)
+	rd.download('youtube',url)
 	return "OK"
 
 @app.route("/api/description",methods=["GET"])
 @crossdomain(origin='*')
 def apiDescription():
-	return json.dumps(API)
+	return json.dumps(buildAPI(request.headers['host']))
 
 @app.route("/downloader")
 def downloader():
@@ -237,4 +238,4 @@ def stopRadio():
 
 if __name__ == '__main__':
 	app.debug=True
-	app.run(host='0.0.0.0')
+	app.run(host='0.0.0.0',use_reloader=False)
