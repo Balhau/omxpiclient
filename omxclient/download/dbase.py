@@ -6,7 +6,14 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import sessionmaker
 
 # Create the engine
-engine = create_engine('sqlite:///omxclient.db', echo=True)
+
+DB_TYPE="mysql+pymysql"
+USER = "user"
+PASS = "password"
+HOST = "host"
+DB = "omxclient"
+engine = create_engine(DB_TYPE+'://'+USER+':'+PASS+'@'+HOST+'/'+DB)
+#engine = create_engine('sqlite:///omxclient.db', echo=True)
 
 Base = declarative_base()
 
@@ -14,8 +21,8 @@ class DownloadRequest(Base):
      __tablename__ = 'downloadRequest'
 
      id = Column(Integer, primary_key=True)
-     service = Column(String)
-     url = Column(String)
+     service = Column(String(128))
+     url = Column(String(512))
 
      def toSerializable(self):
          return {'id':self.id,'service':self.service,'url':self.url}
