@@ -50,6 +50,7 @@ class ResourceDownloader:
     def __consume(self):
         empty=False
         request=None
+        s=None
         print self.killer.kill_now
         while self.killer.kill_now != True:
             try:
@@ -74,7 +75,7 @@ class ResourceDownloader:
                     s.flush()
                     Session.remove()
             except KeyboardInterrupt:
-                print "INTERRUPT 2"
+                s.rollback()
                 raise
 
     def putRequest(self,request):
