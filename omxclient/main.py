@@ -177,15 +177,15 @@ def local():
 
 @app.route('/radiocountries',methods=['GET'])
 def getradiocountries():
-	r=RadioService()
-	countries=r.getCountries()
-	nlist=[]
-	for country in countries:
-		aux={}
-		aux["link"]=country.attrib['href']
-		aux["name"]=country.text_content()
-		nlist.append(aux)
-	return json.dumps(nlist)
+	#r=RadioService()
+	#countries=r.getCountries()
+	#nlist=[]
+	#for country in countries:
+	#	aux={}
+	#	aux["link"]=country.attrib['href']
+	#	aux["name"]=country.text_content()
+	#	nlist.append(aux)
+	return "hello"#json.dumps(nlist)
 
 @app.route('/countryradios',methods=['POST'])
 def getradiocountry():

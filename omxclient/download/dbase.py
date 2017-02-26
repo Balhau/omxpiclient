@@ -8,9 +8,9 @@ from sqlalchemy.orm import sessionmaker
 # Create the engine
 
 DB_TYPE="mysql+pymysql"
-USER = "user"
-PASS = "password"
-HOST = "host"
+USER = "jutil"
+PASS = "gamma007"
+HOST = "192.168.1.68"
 DB = "omxclient"
 engine = create_engine(DB_TYPE+'://'+USER+':'+PASS+'@'+HOST+'/'+DB)
 #engine = create_engine('sqlite:///omxclient.db', echo=True)
