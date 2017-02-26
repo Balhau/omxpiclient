@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-from lxml import html
+#from lxml import html
 import os
 #print html.parse('http://someurl.at.domain').xpath('//body')[0].text_content()
-
+'''
 class RadioService:
 
 	def __init__(self):
@@ -14,7 +14,7 @@ class RadioService:
 		doc=html.parse(self.url+'/index.html')
 		links=doc.xpath("//table[@id='thetable']//a")
 		return links
-	
+
 	def getCountryRadio(self,countryPage):
 		doc=html.parse(self.url+'/'+countryPage)
 		radios=doc.xpath("//table[@id='thetable3']//td[1]//a")
@@ -24,15 +24,15 @@ class RadioService:
 		for line in lines:
 			channels.append(line.findall("a"))
 		return [radios,channels]
-	
+
 	def playRadio(self,radioStation):
 		os.system("mpc clear")
 		os.system("mpc add "+radioStation)
 		os.system('mpc play')
-		
+
 	def stopRadio(self):
 		os.system('mpc clear')
-		
+
 #r=RadioService()
 #c=r.getCountries()
 #p=r.getCountryRadio('portugal.html')
@@ -46,3 +46,4 @@ class RadioService:
 #	print radio.attrib['href']
 #	print radio.text_content()
 #	print html.tostring(radio)
+'''
